@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Holidays</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js" type="text/javascript"></script>
+    <script src="../model/WayDate.js"></script>
+    <script src="../model/Holiday.js"></script>
+    <script type="text/javascript" src="holidays.js"></script>
+</head>
+
+<body ng-app="holidays" ng-controller="holidaysCtrl">
+
+<h1 class="title" id=""><a
+        href="http://waysysweb.com/waysys/index.html?datebench.htm"><img
+        src="../assets/img/waysys.gif" class="logo"/></a>Holidays</h1>
+
+<div class="indent">
+    <form name="iy">
+        <table>
+            <tr>
+                <td class="label">Year</td>
+                <td><input type="number" id="year" size="4" maxlength="4" title="year" min="1900" max="2399" ng-model="year" ng-pattern="yearRegex" name="year"/></td>
+                <td>
+                    <button type="button" id="calculate" ng-click="entry()" class="button">Calculate</button>
+                </td>
+            </tr>
+        </table>
+        <p id="error" class="error" >{{error}}</p>
+    </form>
+</div>
+
+<div>
+    <table class="indent" id="holidays">
+        <tr>
+            <td class="heading">Name of Holiday</td>
+            <td class="heading">Actual Date of Holiday</td>
+            <td class="heading">Date Holiday Observed</td>
+            <td class="heading">Day of Week Holiday Observed</td>
+        </tr>
+        <tr ng-repeat="index in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+            <td>{{holidays[index].name}}</td>
+            <td>{{holidays[index].date}}</td>
+            <td>{{holidays[index].observedDate}}</td>
+            <td>{{holidays[index].dayOfWeek}}</td>
+        </tr>
+    </table>
+</div>
+<div class="indent">
+    <h2>Description</h2>
+    <p>This page calculates the dates of United States federal holidays plus
+        Easter for a specified year. Federal law (5 U.S.C. 6103) establishes
+        ten federal holidays. Some of these holidays are positional, meaning
+        that they occur on a
+        specified day of the week in a month. The remaining holidays occur on specified
+        dates. However, for this second category, if the date occurs on a Saturday, the
+        holiday is observed on the preceding Friday. If the date occurs on a Sunday,
+        the holiday is observed on the following Monday. Easter is not a
+        federal holiday and is always observed on Sunday.</p>
+    <p><B>Note:</B> This page allows entering a year as early as 1900.
+        However, the current practice of observing holiday on the Friday or Monday did
+        not come into effect until the 1970s. Also, certain holidays were not observed
+        in the early part of the 1900s. Therefore, although the page will calculate
+        the date and observed date of holidays for the early part of the twentieth
+        century, the holidays were not necessarily observed on those dates in those
+        years.</p>
+    <h2>References</h2>
+    <p>These Web sites provide additional information on holidays:</p>
+    <ul>
+        <li><a
+                href="http://waysysweb.com/waysys/calendrical_calculations.htm">Calendrical Calculations</a></li>
+        <li><a
+                href="http://en.wikipedia.org/wiki/Federal_holidays#List_of_Holidays">Federal
+            Holiday - Wikipedia</a></li>
+        <li><a href="http://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/federal-holidays">U.S. Office of
+            Personnel Management</a></li>
+        <li><a href="http://aa.usno.navy.mil/faq/docs/easter.php">Date of
+            Easter</a></li>
+    </ul>
+    <h2>Instructions</h2>
+    <ol>
+        <li>Enter a year (betwee 1900 and 2399)</li>
+        <li>Click on the <b>Calculate</b> button.</li>
+    </ol>
+    <h2>Output</h2>
+    <p>The table displays information for each federal holiday for the
+        specified year. The first column of the table displays the official federal
+        name of the holiday. The second column displays the actual date of the holiday.
+        The third column displays the date on which the holiday is observed in the
+        federal government. The fourth column displays the day of the week on which the
+        holiday is observed.</p>
+</div>
+</body>
+</html>

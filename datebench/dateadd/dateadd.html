@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date Addition</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="../model/WayDate.js"></script>
+    <script type="text/javascript" src="dateadd.js"></script>
+</head>
+<body ng-app="dateadd" ng-controller="dateAddCtrl">
+<h1 class="title" id=""><a
+        href="http://waysysweb.com/waysys/index.html?datebench.htm"><img
+        src="../assets/img/waysys.gif" class="logo"/></a>Date Addition</h1>
+
+<div class="indent">
+    <form>
+        <table>
+            <tr>
+                <td class="heading">Month</td>
+                <td class="heading">Day</td>
+                <td class="heading">Year</td>
+                <td class="heading">Days</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="month" size="2" maxlength="2" title="month" min="1" max="12" ng-model="month" ng-pattern="twoDigitRegex" /></td>
+                <td><input type="number" id="day" size="2" maxlength="2" title="day" ng-model="day" min="1" max="31" ng-pattern="twoDigitRegex"/></td>
+                <td><input type="number" id="year" size="4" maxlength="4" title="year" ng-model="year" min="1601" max="3999" ng-pattern="fourDigitRegex"/></td>
+                <td><input type="number" id="days" maxlength="7" title="number of days to add" ng-model="days" ng-pattern="numRegex"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td class="heading">Date</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><input type="text" id="Date" readonly class="noborder" title="date" value="{{resultDate.toString()}}"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <button type="button" id="calculate" ng-click="entry()" class="button">Calculate</button>
+        <p id="error" class="error">{{error}}</p>
+    </form>
+</div>
+<div class="indent">
+    <h2>Instructions</h2>
+    <p>
+        To calculate the date resulting from adding or subtracting a number
+        of days from another date, perform these steps:
+    </p>
+    <ol>
+        <li>Enter the desired date in the <b>Month</b>, <b>Day</b>, and
+            <b>Year</b> fields.
+        </li>
+        <li>Enter the number of days in the <b>Days</b> field. The value
+            can be negative, positive, or zero.
+        </li>
+        <li>Click the <b>Calculate</b> button.</li>
+    </ol>
+    <p>The page displays the date resulting from adding the value of days
+        to the original date.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* datestyle.css - CSS style sheet for datebench                              */
+/*                                                                            */
+*.heading {
+    font-weight: bold;
+    background-color: #E6D8D1;
+    font-size: medium;
+    text-align: center;
+}
+
+*.label {
+    font-weight: bold;
+    background-color: #E6D8D1;
+    font-size: medium;
+    text-align: left;
+}
+
+*.title {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+*.logo {
+    margin-right: 3%;
+}
+
+*.noborder {
+    border-style: none;
+}
+
+*.spacing {
+    height: 25px;
+}
+
+*.indent {
+    margin-left: 7%;
+    background-color: #FFF0E8;
+}
+
+*.button {
+    background-color: #E6D8D1;
+    font-weight: bold;
+}
+
+*.error {
+    color: darkred;
+}
+
+
+

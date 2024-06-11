@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Absolute Date</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="../model/WayDate.js"></script>
+    <script type="text/javascript" src="absolute.js"></script>
+</head>
+<body ng-app="absolute" ng-controller="absoluteCtrl">
+<h1 class="title" id=""><a
+        href="http://waysysweb.com/waysys/index.html?datebench.htm"><img
+        src="../assets/img/waysys.gif" class="logo"/></a>Absolute Date</h1>
+
+<div class="indent">
+    <form>
+        <table>
+            <tr>
+                <td class="heading">Month</td>
+                <td class="heading">Day</td>
+                <td class="heading">Year</td>
+                <td class="heading">Absolute Date</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="month1" size="2" maxlength="2" title="month" min="1" max="12" ng-model="month1" ng-pattern="twoDigitRegex" /></td>
+                <td><input type="number" id="day1" size="2" maxlength="2" title="day" ng-model="day1" min="1" max="31" ng-pattern="twoDigitRegex"/></td>
+                <td><input type="number" id="year1" size="4" maxlength="4" title="year" ng-model="year1" min="1601" max="3999" ng-pattern="fourDigitRegex"/></td>
+                <td><input type="number" id="absolute1" title="Absolute Date" ng-model="result" readonly class="noborder"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <button type="button" id="calculate1" ng-click="entry1()" class="button">Calculate</button>
+        <p id="error1" class="error">{{error1}}</p>
+    </form>
+</div>
+<div class="indent">
+    <h2>Instructions</h2>
+    <p>
+        The absolute date is the date expressed as the number of days since 31-Dec-1600.  To calculate the absolute
+        date from the month, day, and year, perform these steps:
+    </p>
+    <ol>
+        <li>Enter the desired date in the <b>Month</b>, <b>Day</b>, and
+            <b>Year</b> fields.
+        </li>
+        <li>Click the <b>Calculate</b> button.</li>
+    </ol>
+    <p>The page displays the absolute date for the specified month, day, and year.</p>
+</div>
+<div class="indent">
+    <form>
+        <table>
+            <tr>
+                <td class="heading">Absolute Date</td>
+                <td class="heading">Month</td>
+                <td class="heading">Day</td>
+                <td class="heading">Year</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="absolute2" title="Absolute Date" min="1" max="876216" maxlength="6" size="7" ng-model="absolute2"  /></td>
+                <td><input type="number" id="month2" size="2"  title="month" readonly ng-model="month2" class="noborder" /></td>
+                <td><input type="number" id="day2" size="2"  title="day" ng-model="day2" readonly class="noborder" /></td>
+                <td><input type="number" id="year2" size="4"  title="year" ng-model="year2" readonly class="noborder" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <button type="button" id="calculate2" ng-click="entry2()" class="button">Calculate</button>
+        <p id="error2" class="error">{{error2}}</p>
+    </form>
+</div>
+<div class="indent">
+    <h2>Instructions</h2>
+    <p>
+       To o calculate the month, day, and year from the absolute date, perform these steps:
+    </p>
+    <ol>
+        <li>Enter the desired absolute date in the Absolute Date field.  A valid absolute date is between 1 and 876216.
+        </li>
+        <li>Click the <b>Calculate</b> button.</li>
+    </ol>
+    <p>The page displays the month, day, and year .</p>
+</div>
+</body>
+</html>
