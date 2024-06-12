@@ -4,6 +4,7 @@
     <title>Date Bench</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://meyerweb.com/eric/tools/css/reset/reset.css" />
     <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script src="../model/WayDate.js" type="text/javascript"></script>
@@ -12,13 +13,13 @@
 </head>
 <body ng-app="datebnch" ng-controller="datebnchCtrl" >
     <header role="banner">
-        <h1 class="title" id=""><a
+        <h1><a
         href="http://waysysweb.com/waysys/index.html?datebench.htm"><img
         src="../assets/img/waysys.gif" class="logo"/></a>Single Date Check
         </h1>
     </header>
 
-    <article class="indent">
+    <article>
         <form>
             <table>
                 <tr>
@@ -57,7 +58,7 @@
         </form>
 
         <table id="calendar" border="0">
-            <caption id="caption">{{thisDate.monthAbbrev(thisDate.month) + ' ' + thisDate.year.toString()}}</caption>
+            <caption>{{thisDate.monthAbbrev(thisDate.month) + ' ' + thisDate.year.toString()}}</caption>
             <tr>
                 <th class="heading">Sun</th>
                 <th class="heading">Mon</th>
@@ -70,8 +71,8 @@
             <tr ng-repeat="week in [0, 1, 2, 3, 4, 5]">
                 <td ng-repeat="day in [0, 1, 2, 3, 4, 5, 6]">{{dayInCalendar(week, day)}}</td>
             </tr>
-
         </table>
+        
         <h2>Instructions</h2>
 
         <p>
@@ -91,11 +92,7 @@
         </ul>
 
     </article>
-    <aside class="indent" role="complementary">
-        <h2>Related Links</h2>
-        <a href="../dateadd/dateadd.html">Date Add</a>    
-    </aside>
-    <footer role="contentinfo">
+    <footer role="contentinfo" >
         <p>&copy; 2024 William Shaffer</p>
     </footer>
 </body>

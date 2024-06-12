@@ -1,5 +1,18 @@
 /* datestyle.css - CSS style sheet for datebench                              */
 /*                                                                            */
+
+/* -------------------------------------- Classes ------------------*/
+
+*.button {
+    background-color: #E6D8D1;
+    font-weight: bold;
+    margin: 10px;
+}
+
+*.error {
+    color: darkred;
+}
+
 *.heading {
     font-weight: bold;
     background-color: #E6D8D1;
@@ -14,11 +27,6 @@
     text-align: left;
 }
 
-*.title {
-    font-weight: bold;
-    vertical-align: middle;
-}
-
 *.logo {
     margin-right: 3%;
 }
@@ -28,22 +36,67 @@
 }
 
 *.spacing {
-    height: 25px;
+    height: 2em;
 }
 
-*.indent {
-    margin-left: 7%;
-    background-color: #FFF0E8;
+/* ---------------------------  Element Styles ------------------ */
+
+article {
+    margin-left: 7%;    
 }
 
-*.button {
-    background-color: #E6D8D1;
+
+body {
+    background-color: linen;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+}
+
+caption {
     font-weight: bold;
+    font-size: 1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
-*.error {
-    color: darkred;
+
+footer {
+    margin-top: 2em;
+    margin-left: 7%;
 }
+
+h1 {
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 2em;
+    margin-bottom: 1em;
+    margin-left: 1%;  
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ol {
+    list-style: decimal inside none;
+}
+
+p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+td {
+    padding: 3px;
+}
+
+ul {
+    list-style: disc inside none;
+}
+
 
 
 
