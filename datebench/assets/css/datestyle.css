@@ -1,7 +1,7 @@
 /* datestyle.css - CSS style sheet for datebench                              */
 /*                                                                            */
 
-/* -------------------------------------- Classes ------------------*/
+/* -------------------------------------- Classes ----------------------------*/
 
 *.button {
     background-color: #E6D8D1;
@@ -9,8 +9,32 @@
     margin: 10px;
 }
 
+.container {
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: 40% 60%;
+}
+
 *.error {
     color: darkred;
+}
+
+.item1 {
+    grid-column: 1 / 1;
+  }
+
+.item2 {
+    grid-column: 2 / 2;
+}
+
+@media only screen and (max-width: 40em) {
+    .container {
+        grid-template-columns: 90% 10%;
+    }
+
+    .item2 {
+        grid-column: 1 / 1;
+    }
 }
 
 *.heading {
@@ -35,14 +59,18 @@
     border-style: none;
 }
 
-*.spacing {
-    height: 2em;
+/* ---------------------------  ID Styles ----------------------- */
+
+#fullpage {
+    max-width: 50em;
 }
+
 
 /* ---------------------------  Element Styles ------------------ */
 
 article {
-    margin-left: 7%;    
+    margin-left: 7%;  
+    margin-right: 10%;  
 }
 
 
@@ -75,13 +103,15 @@ h1 {
 
 h2 {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1em;
     margin-top: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.75em;
 }
 
 ol {
-    list-style: decimal inside none;
+    list-style: decimal outside none;
+    margin-inline-start: 0;
+    padding-inline-start: 40px;
 }
 
 p {
@@ -94,7 +124,9 @@ td {
 }
 
 ul {
-    list-style: disc inside none;
+    list-style: disc outside none;
+    margin-inline-start: 0;
+    padding-inline-start: 40px;
 }
 
 
