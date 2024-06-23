@@ -448,11 +448,13 @@ WayDate.isValidDate = function (month, day, year) {
     } else if (month > 12) {
         result = false;
     }
-    numberDaysInMonth = WayDate.daysInMonth(month, year);
-    if (day < 1) {
-        result = false;
-    } else if (day > numberDaysInMonth) {
-        result = false;
+    if (result) {
+        numberDaysInMonth = WayDate.daysInMonth(month, year);
+        if (day < 1) {
+            result = false;
+        } else if (day > numberDaysInMonth) {
+            result = false;
+        }
     }
     return result;
 };

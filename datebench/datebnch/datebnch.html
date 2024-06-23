@@ -7,16 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://meyerweb.com/eric/tools/css/reset/reset.css" />
     <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script src="../model/WayDate.js" type="text/javascript"></script>
-    <script src="./datebnch.js" type="text/javascript"></script>
+    <script src="./datebench.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="../assets/img/waysys.ico" type="image/x-icon">
 </head>
 
-<body ng-app="datebnch" ng-controller="datebnchCtrl" id="fullpage">
+<body id="fullpage">
     <header role="banner">
-        <h1><a href="http://waysysweb.com/waysys/index.html?datebench.htm"><img src="../assets/img/waysys.gif"
-                    class="logo" /></a>DateBench&trade;</h1>         
+        <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>         
     </header>
 
     <article class="container">
@@ -30,15 +28,12 @@
                         <td class="heading">Year</td>
                     </tr>
                     <tr>
-                        <td><input type="number" id="month" size="3" maxlength="2" title="month" min="1" max="12"
-                                ng-model="month" ng-pattern="twoDigitRegex" /></td>
-                        <td><input type="number" id="day" size="3" maxlength="2" title="day" min="1" max="31"
-                                ng-model="day" ng-pattern="twoDigitRegex" /></td>
-                        <td><input type="number" id="year" size="5" maxlength="4" title="year" min="1601" max="2100"
-                                ng-model="year" ng-pattern="fourDigitRegex" /></td>
+                        <td><input type="number" id="month" size="3" maxlength="2" title="month" min="1"    max="12"/></td>
+                        <td><input type="number" id="day"   size="3" maxlength="2" title="day"   min="1"    max="31"/></td>
+                        <td><input type="number" id="year"  size="5" maxlength="4" title="year"  min="1601" max="3999" /></td>
                     </tr>
                 </table>
-                <button type="button" id="calculate" ng-click="entry()" class="button">Calculate</button>
+                <button type="button" id="calculate"  class="button">Calculate</button>
             </form>
         </div>
 
@@ -47,25 +42,25 @@
                 <tr>
                     <td class="label">Day of Year</td>
                     <td><input type="text" id="DayOfYear" readonly title="Day of Year"
-                            value="{{(thisDate.dayYear())|number}}" class="noborder" /></td>
+                             class="noborder" /></td>
                 </tr>
                 <tr>
                     <td class="label">Is Leap Year</td>
                     <td><input type="text" id="IsLeapYear" readonly title="Is Leap Year?"
-                            value="{{thisDate.leapYear() ? 'Yes' : 'No'}}" class="noborder" /></td>
+                            class="noborder" /></td>
                 </tr>
                 <tr>
                     <td class="label">Day Of Week</td>
-                    <td><input type="text" id="DayOfWeek" readonly title="Day of Week" value="{{thisDate.dayOfWeek()}}"
+                    <td><input type="text" id="DayOfWeek" readonly title="Day of Week" 
                             class="noborder" /></td>
                 </tr>
             </table>
-            <p id="error" class="error">{{error}}</p>
+            <p id="error" class="error"></p>
         </div>
 
         <div class="item1">
             <table id="calendar" border="0">
-                <caption>{{thisDate.monthAbbrev(thisDate.month) + ' ' + thisDate.year.toString()}}</caption>
+                <caption>Calendar</caption>
                 <tr>
                     <th class="heading">Sun</th>
                     <th class="heading">Mon</th>
@@ -74,9 +69,6 @@
                     <th class="heading">Thu</th>
                     <th class="heading">Fri</th>
                     <th class="heading">Sat</th>
-                </tr>
-                <tr ng-repeat="week in [0, 1, 2, 3, 4, 5]">
-                    <td ng-repeat="day in [0, 1, 2, 3, 4, 5, 6]">{{dayInCalendar(week, day)}}</td>
                 </tr>
             </table>
         </div>
