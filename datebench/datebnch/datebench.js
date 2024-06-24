@@ -17,11 +17,11 @@
  * @param {string/number} value the value to be applied
  */
 function setValue(id, value) {
-    const inpt = document.querySelector(id)
+    const inpt = document.querySelector(id);
     if (inpt === null) {
-        throw new Error("Input with id could not be found: " + id)
+        throw new Error("Input with id could not be found: " + id);
     }
-    inpt.value = value
+    inpt.value = value;
 }
 
 /**
@@ -31,11 +31,11 @@ function setValue(id, value) {
  * @returns the value from the input
  */
 function getValue(id) {
-    const inpt = document.querySelector(id)
+    const inpt = document.querySelector(id);
     if (inpt == null) {
-        throw new Error("Input with id could not be found: " + id)
+        throw new Error("Input with id could not be found: " + id);
     }
-    return inpt.value
+    return inpt.value;
 }
 
 /** 
@@ -47,14 +47,14 @@ function getValue(id) {
  * @returns the value from the input
  */
 function getValueInt(id) {
-    const result = getValue(id)
-    let value = NaN
+    const result = getValue(id);
+    let value = NaN;
     if (typeof result === "string") {
-        value = parseInt(result, 10)
+        value = parseInt(result, 10);
     } else if (typeof result === "int") {
-        value = result
+        value = result;
     }
-    return value
+    return value;
 }
 
 /**
@@ -84,12 +84,12 @@ function setText(id, text) {
  *
  */
 function setRequestDate(date) {
-    const month = date.month
-    const day = date.day
-    const year = date.year
-    setValue("#month", month)
-    setValue("#day", day)
-    setValue("#year", year)
+    const month = date.month;
+    const day = date.day;
+    const year = date.year;
+    setValue("#month", month);
+    setValue("#day", day);
+    setValue("#year", year);
 }
 
 
@@ -105,7 +105,9 @@ function displayError(text) {
 
 /**
  * getRequestedDate returns the date set by the user
- * in the requested date fields
+ * in the requested date fields.  Null is returned
+ * if the user has made an error in entering the
+ * month, day, and year.
  * 
  * @returns {WayDate} an instance of WayDate
  */
@@ -127,7 +129,7 @@ function getRequestedDate() {
             displayError(e.toString());
         }
     }
-    return thisDate
+    return thisDate;
 }
 
 /**
@@ -145,9 +147,90 @@ function setDateInformation() {
     }
 }
 
+/**
+ * Return the day of the month for a given position in the calendar.  The calendar is a two dimensional table
+ * with 7 columns for each day in the week, and 6 rows.  (Not all rows are used for all months.)
+ *
+ * @param {WayDate} date a date in the month to be represented in the calendar
+ * @param row {number} the row in the calendar (0 <= row < 6)
+ * @param dayOfWeek {number} the day of the week as a number (0 <= dayOfWeek < 7)
+ * @returns {string} a string with the day of month where appropriate.
+ */
+function dayInCalendar(date, row, dayOfWeek) {
+    const firstDayInMonth = date.firstDayOfMonth().dayOfWeekNumber();
+    const dayInMonth = 7 * row + dayOfWeek - firstDayInMonth;
+    const month = date.month;
+    const year = date.year;
+    let result = "";
+    if (dayInMonth < 0) {
+        result = "___";
+    } else if (dayInMonth >= WayDate.daysInMonth(month, year)) {
+        result = "___";
+    } else {
+        result = "" + (dayInMonth + 1);
+    }
+    return result;
+}
+
+/**  
+ * displayCalendar populates the calendar table
+ *
+ * @param {WayDate} date a date in the month of the calendar
+ */
+function displayCalendar() {
+    const date = getRequestedDate();
+    if (date !== null) {
+        const calendar = document.querySelector('#calendar');
+        if (calendar === null) {
+            throw Error("Unable to retrieve calendar table");
+        }
+        let rows = calendar.querySelectorAll('tr');
+        if (rows.length === 0) {
+            throw Error("No rows found in calendar");
+        }
+        let rowNum = 0;
+        for (let row of rows) {
+            if (rowNum > 0) {
+                processRow(row, rowNum, date);
+            }
+            rowNum++;
+        }
+    }
+}
+
+/**
+ * processRow populates a row 
+ * 
+ * @param {Element} row a <tr> element containing <td> elements
+ * @param {int} rowNum the row in the table (0 < row <= 6)
+ * @param {WayDate} date a date in the month being displayed
+ */
+function processRow(row, rowNum, date) {
+    let cells = row.querySelectorAll('td');
+    if (cells.length != 7) {
+        throw Error("Row does not have 7 cells.  Row number is: " + rowNum)
+    }
+    let dayOfWeek = 0;
+    for (let cell of cells) {
+        let value = dayInCalendar(date, rowNum - 1, dayOfWeek)
+        cell.textContent = value;
+        dayOfWeek++
+    }
+}
+
 /* --------------------------------------------------------------------------
 * Event Listeners
 ----------------------------------------------------------------------------- */
+
+/**
+ * calcEventListener listens for the onClick event and updates the screen.
+ * 
+ * @param {Event} event the event object
+ */
+function calcEvenListener(event) {
+    setDateInformation();
+    displayCalendar();
+}
 
 /**
  * setUp is a listenter that listens for the "load" event on the window,
@@ -157,17 +240,17 @@ function setUpEvent() {
     console.log("Executing setUp")
     let b = document.querySelector('#calculate');
     if (b === null) {
-        console.log("<button id = calculate> was not found");
+        throw new Error("<button id = calculate> was not found");
     } else {
-        b.addEventListener("click", setDateInformation)
+        b.addEventListener("click", calcEvenListener)
         console.log("Event listener on button is set.")
-    } 
+    }
     //
     // Initialize fields
     //
     setRequestDate(WayDate.today());
     setDateInformation();
+    displayCalendar();
 }
 
 window.addEventListener("load", setUpEvent, false)
-console.log("Listeners set up")
