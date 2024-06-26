@@ -51,7 +51,7 @@ function getValueInt(id) {
     let value = NaN;
     if (typeof result === "string") {
         value = parseInt(result, 10);
-    } else if (typeof result === "int") {
+    } else if (typeof result === "number") {
         value = result;
     }
     return value;
@@ -180,10 +180,16 @@ function dayInCalendar(date, row, dayOfWeek) {
 function displayCalendar() {
     const date = getRequestedDate();
     if (date !== null) {
+        //
+        // Fetch calendar table
+        //
         const calendar = document.querySelector('#calendar');
         if (calendar === null) {
             throw Error("Unable to retrieve calendar table");
         }
+        //
+        // Set text for rable rows
+        //
         let rows = calendar.querySelectorAll('tr');
         if (rows.length === 0) {
             throw Error("No rows found in calendar");
@@ -195,6 +201,12 @@ function displayCalendar() {
             }
             rowNum++;
         }
+        //
+        // Set caption
+        //
+        const caption = calendar.querySelector('caption')
+        const monthAbbrev = date.monthAbbrev(date.month)
+        caption.textContent = monthAbbrev + ' ' + date.year
     }
 }
 
@@ -228,6 +240,7 @@ function processRow(row, rowNum, date) {
  * @param {Event} event the event object
  */
 function calcEvenListener(event) {
+    console.log("event received: " + event.type)
     setDateInformation();
     displayCalendar();
 }
@@ -238,6 +251,9 @@ function calcEvenListener(event) {
  */
 function setUpEvent() {
     console.log("Executing setUp")
+    //
+    // Set event listener on Calculate button
+    //
     let b = document.querySelector('#calculate');
     if (b === null) {
         throw new Error("<button id = calculate> was not found");
