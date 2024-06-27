@@ -11,7 +11,7 @@
  * 24-Jun-2024 W Shaffer  Converted to class notation
  */
 
-/* exported WayDate */
+export { WayDate }
 
 /**
  * WayDate is a class for performing date calculation.
