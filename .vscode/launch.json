@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "name": "vscode-jest-tests.v2.website",
+            "request": "launch",
+            "args": [
+                "--runInBand",
+                "--watchAll=false",
+                "--testNamePattern",
+                "${jest.testNamePattern}",
+                "--runTestsByPath",
+                "${jest.testFile}"
+            ],
+            "cwd": "/home/bozo/website/datebench",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "program": "/home/bozo/website/datebench/node_modules/.bin/jest"
+        }
+    ]
+}

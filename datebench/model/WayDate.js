@@ -41,7 +41,7 @@ class WayDate {
       * Return the string abbreviation for a month
       *
       * @param {number} month
-      * @returns {String} the three letter abbreviation for the month
+      * @returns {string} the three letter abbreviation for the month
       */
     static monthAbbrev(month) {
         const abbrevs = [
@@ -49,7 +49,7 @@ class WayDate {
             "Oct", "Nov", "Dec"
         ];
         if (month < 1) {
-            throw new Error("monthAbbrev: month must be greater than 1: " +
+            throw new Error("monthAbbrev: month must be equal to or greater than 1: " +
                 month);
         } else if (month > 12) {
             throw new Error("monthAbbrev: must be less than or equal to 12: " +
@@ -68,7 +68,7 @@ class WayDate {
         if (day < 0) {
             throw new Error("Invalid day of week: " + day);
         }
-        if (day > 7) {
+        if (day >= 7) {
             throw new Error("Invalid day of week: " + day);
         }
         const abbrevs = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -96,9 +96,9 @@ class WayDate {
             throw new Error("Day of year cannot be greater than days in year: " +
                 dayOfYear);
         }
-        var monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
+        const monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
         return new WayDate(monthDay[0], monthDay[1], year);
-    };
+    }
 
     /**
      * Return today's date
@@ -111,7 +111,7 @@ class WayDate {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         return new WayDate(month, day, year);
-    };
+    }
 
     /**
      * Return true if the year is a leap year.
@@ -129,7 +129,7 @@ class WayDate {
             result = true;
         }
         return result;
-    };
+    }
 
     /**
      * Return the number of days in the month.
@@ -191,6 +191,7 @@ class WayDate {
     static isValidDate(month, day, year) {
         let result = true;
         let numberDaysInMonth;
+
         if (typeof month !== "number") {
             result = false;
         }
@@ -221,7 +222,7 @@ class WayDate {
             }
         }
         return result;
-    };
+    }
 
     /**
      * Return the days in the specified year and prior years
@@ -231,8 +232,9 @@ class WayDate {
      *  (0 <= days <= MAXIMUM_ABSOLUTE_DATE)
      */
     static daysInPastYears(year) {
-        let y = year - 1600;
+        const y = year - 1600;
         let days = 0;
+
         if (year > WayDate.MAXIMUM_YEAR) {
             throw new Error("Invalid value for year: " + year);
         }
@@ -248,7 +250,7 @@ class WayDate {
                 + Math.floor(y / 400); // plus years divisible by 400
         }
         return days;
-    };
+    }
 
     /**
      * Return the day of the year.  1-Jan is day 1.
@@ -260,7 +262,7 @@ class WayDate {
      *
      */
     static dayOfYear(month, day, year) {
-        var dayInYear = Math.floor((367 * month - 362) / 12) + day;
+        let dayInYear = Math.floor((367 * month - 362) / 12) + day;
         if (WayDate.isLeapYear(year) && (month > 2)) {
             dayInYear -= 1;
         } else if (!WayDate.isLeapYear(year) && (month > 2)) {
@@ -276,15 +278,15 @@ class WayDate {
      * @returns {number} year associated with the absolute date
      */
     static yearFromAbsolute(abDate) {
-        let year,
-            d0 = abDate - 1,
-            n400 = Math.floor(d0 / 146097), // Number of days in a 400 year cycle:
-            d1 = d0 % 146097, // 400*365 + 100 - 3
-            n100 = Math.floor(d1 / 36524),  // Number of days in 100 year cycle:
-            d2 = d1 % 36524,  // 365*100 + 25 - 1
-            n4 = Math.floor(d2 / 1461),   // Number of days in 4 year cycle:
-            d3 = d2 % 1461,   // 365*4 + 1
-            n1 = Math.floor(d3 / 365);    // Number of days in 1 year:
+        let year;
+        const d0 = abDate - 1,
+              n400 = Math.floor(d0 / 146097), // Number of days in a 400 year cycle:
+              d1 = d0 % 146097, // 400*365 + 100 - 3
+              n100 = Math.floor(d1 / 36524),  // Number of days in 100 year cycle:
+              d2 = d1 % 36524,  // 365*100 + 25 - 1
+              n4 = Math.floor(d2 / 1461),     // Number of days in 4 year cycle:
+              d3 = d2 % 1461,   // 365*4 + 1
+              n1 = Math.floor(d3 / 365);      // Number of days in 1 year:
         //
         // If n100 = 4 or n1 = 4, then the date is 31-Dec of the leap
         // year so we add one less year to get the absolute year
@@ -318,7 +320,7 @@ class WayDate {
         if (dayOfYear > WayDate.daysInYear(year)) {
             throw new Error("DayOfYear is larger than days in year: " + dayOfYear);
         }
-        var day = 1,
+        let day = 1,
             month = 1,
             diff = dayOfYear - 1;
 
@@ -338,7 +340,7 @@ class WayDate {
      * Return a WayDate with the month, day, and year based on an absolute
      * date.
      *
-     * @param abDate an absolute date
+     * @param {number} abDate an absolute date
      * @returns {WayDate} an array with month, day, year
      */
     static dateFromAbsolute(abDate) {
@@ -349,9 +351,9 @@ class WayDate {
             throw new Error("Absolute date must not be larger than maximum: " +
                 abDate);
         }
-        var year = WayDate.yearFromAbsolute(abDate),
-            dayOfYear = abDate - WayDate.daysInPastYears(year - 1),
-            monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
+        const year = WayDate.yearFromAbsolute(abDate);
+        const dayOfYear = abDate - WayDate.daysInPastYears(year - 1);
+        const monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
         return WayDate(monthDay[0], monthDay[1], year);
     }
 
@@ -428,7 +430,7 @@ class WayDate {
     }
 
     /**
-     * Return the number of days since 31-Jan-1600.
+     * Return the number of days since 31-Dec-1600.
      *
      * @returns {number} the absolute date
      */
@@ -495,7 +497,7 @@ class WayDate {
         if (abDate > WayDate.MAXIMUM_ABSOLUTE_DATE) {
             throw new Error("Value is too large: " + value);
         }
-        const date = WayDate.monthDayYearFromAbsolute(abDate);
+        const date = WayDate.dateFromAbsolute(abDate);
         return date;
     }
 
