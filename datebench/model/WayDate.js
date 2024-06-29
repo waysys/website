@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 William Shaffer
+ * Copyright (c) 2014, 2016, 2024 William Shaffer
  *
  * Date: 09-Feb-2014
  *
@@ -38,6 +38,40 @@ class WayDate {
     // ------------------------------------------------------------------------
 
     /**
+     * Return true if the month is a valid month, that is:
+     * 1 <= month <= 12
+     * 
+     * @param {number} month the month being tested
+     * @returns {boolean} true if the month is valid
+     */
+    static isMonth(month) {
+        let result = true;
+        if (typeof month !== "number") {
+            result = false;
+        } else {
+            result = (1 <= month) && (month <= 12);
+        }
+        return result;
+    }
+
+    /**
+     * Return true if the dayOfWeek is a valid day of the week, that is:
+     * 0 <= dayOfWeek <= 6
+     * 
+     * @param {number} dayOfWeek the day of the week.  Sunday is 0.
+     * @returns {boolean} true if the day of the week is valid
+     */
+    static isDayOfWeek(dayOfWeek) {
+        let result = true;
+        if (typeof dayOfWeek !== "number") {
+            result = false;
+        } else {
+            result = (0 <= dayOfWeek) && (dayOfWeek <= 6)
+        }
+        return result
+    }
+
+    /**
       * Return the string abbreviation for a month
       *
       * @param {number} month
@@ -48,41 +82,32 @@ class WayDate {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
             "Oct", "Nov", "Dec"
         ];
-        if (month < 1) {
-            throw new Error("monthAbbrev: month must be equal to or greater than 1: " +
-                month);
-        } else if (month > 12) {
-            throw new Error("monthAbbrev: must be less than or equal to 12: " +
-                month);
-        }
+
+        this.assert(this.isMonth(month), "monthAbbrev: invalid month: " + month)
         return abbrevs[month - 1];
     }
 
     /**
      * Return the abbreviation of the day of the week.
      *
-     * @param {number} day the day of the week - Sunday = 0
+     * @param {number} dayOfWeek the day of the week - Sunday = 0
      * @returns {String} the day of the week
      */
-    static dayOfWeekAbbrev(day) {
-        if (day < 0) {
-            throw new Error("Invalid day of week: " + day);
-        }
-        if (day >= 7) {
-            throw new Error("Invalid day of week: " + day);
-        }
+    static dayOfWeekAbbrev(dayOfWeek) {
+        this.assert(this.isDayOfWeek(dayOfWeek), "Invalid day of week: " + dayOfWeek)
+
         const abbrevs = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        return abbrevs[day];
+        return abbrevs[dayOfWeek];
     }
 
     /**
-     * Return a date, given a year and day of year
+     * Return a date, given a year and day of year.
      *
      * @param {number} dayOfYear the day of the year
      * @param {number} year
      * @returns {WayDate} a date
      */
-    static dateFromDayOfMonth(dayOfYear, year) {
+    static dateFromDayOfYear(dayOfYear, year) {
         if (year < WayDate.MINIMUM_YEAR) {
             throw new Error("Year cannot be less than minimum year: " + year);
         }
@@ -355,6 +380,22 @@ class WayDate {
         const dayOfYear = abDate - WayDate.daysInPastYears(year - 1);
         const monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
         return WayDate(monthDay[0], monthDay[1], year);
+    }
+
+    /* -------------------------------------------------------------------------
+     Supporting Functions
+     ------------------------------------------------------------------------- */
+
+    /**
+     * Throw an exception if the result is false.
+     *
+     * @param {Boolean} result the result of a test
+     * @param {String} descr the description of the test
+     */
+    static assert(result, descr) {
+        if (!result) {
+            throw new Error(descr);
+        }
     }
 
     // ------------------------------------------------------------------------
