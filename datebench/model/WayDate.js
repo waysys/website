@@ -34,7 +34,7 @@ class WayDate {
     }
 
     // ------------------------------------------------------------------------
-    // Static Methods
+    // Validation Methods
     // ------------------------------------------------------------------------
 
     /**
@@ -55,6 +55,23 @@ class WayDate {
     }
 
     /**
+     * Return true if the specified year is valid, that is:
+     * MINIMUM_YEAR <= year <= MAXIMIM_YEAR
+     * 
+     * @parm (number) year the year being tested
+     * @returns (boolean) true if year is valid
+     */
+    static isYear(year) {
+        let result = true;
+        if (typeof year !== "number") {
+            result = false;
+        } else {
+            result = (WayDate.MINIMUM_YEAR <= year) && (year <= WayDate.MAXIMUM_YEAR)
+        }
+        return result
+    }
+
+    /**
      * Return true if the dayOfWeek is a valid day of the week, that is:
      * 0 <= dayOfWeek <= 6
      * 
@@ -70,6 +87,31 @@ class WayDate {
         }
         return result
     }
+
+    /**
+     * Return true if the dayOfYear is a valid day of the year, that is:
+     * if year is a leap year, 1 <= dayOfYear <= 366
+     * if year is not a leap year, 1 <= dayOfYear < 365
+     * 
+     * @param (number) dayOfYear the day of year being tested
+     * @param (number) year the year being tested
+     * @returns (boolean) true if the day of year is valid
+     */
+    static isDayOfYear(dayOfYear, year) {
+        let result = true;
+        if (typeof dayOfYear !== "number") {
+            result = false;
+        } else if (!this.isYear(year)){
+            result = false;
+        } else {
+            result = (1 <= dayOfYear) && (dayOfYear <= this.daysInYear(year))
+        }
+        return result;
+    }
+
+    // ------------------------------------------------------------------------
+    // Abbreviation Methods
+    // ------------------------------------------------------------------------
 
     /**
       * Return the string abbreviation for a month
@@ -100,6 +142,10 @@ class WayDate {
         return abbrevs[dayOfWeek];
     }
 
+    // ------------------------------------------------------------------------
+    // Factory Methods
+    // ------------------------------------------------------------------------
+
     /**
      * Return a date, given a year and day of year.
      *
@@ -108,19 +154,9 @@ class WayDate {
      * @returns {WayDate} a date
      */
     static dateFromDayOfYear(dayOfYear, year) {
-        if (year < WayDate.MINIMUM_YEAR) {
-            throw new Error("Year cannot be less than minimum year: " + year);
-        }
-        if (year > WayDate.MAXIMUM_YEAR) {
-            throw new Error("Year cannot be greater than maximum year: " + year);
-        }
-        if (dayOfYear < 1) {
-            throw new Error("Day of year cannot be less than one: " + dayOfYear);
-        }
-        if (dayOfYear > WayDate.daysInYear(year)) {
-            throw new Error("Day of year cannot be greater than days in year: " +
-                dayOfYear);
-        }
+        this.assert(this.isDayOfYear(dayOfYear, year), 
+            "Invalid day of year or year: " + dayOfYear + " " + year);
+
         const monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
         return new WayDate(monthDay[0], monthDay[1], year);
     }
@@ -137,6 +173,10 @@ class WayDate {
         const year = date.getFullYear();
         return new WayDate(month, day, year);
     }
+
+    // ------------------------------------------------------------------------
+    // Static Methods
+    // ------------------------------------------------------------------------
 
     /**
      * Return true if the year is a leap year.
@@ -166,12 +206,9 @@ class WayDate {
     static daysInMonth(month, year) {
         let numberDaysInMonth;
 
-        if (month < 1) {
-            throw new Error("daysInMonth: illegal value of month: " + month);
-        } else if (month > 12) {
-            throw new Error("daysInMonth: illegal value of month: " + month);
-        }
-
+        this.assert(this.isMonth(month), "Invalid month: " + month);
+        this.assert(this.isYear(year), "Invalid year: " + year);
+        
         const daysInLeapYear = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         const daysInRegYear = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 

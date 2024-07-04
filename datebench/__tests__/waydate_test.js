@@ -53,6 +53,56 @@ describe('day of week abreviation', () => {
     })
 
     test('invalid day of week too large', () => {
-        
+        const tf = () => {
+            const dayOfWeek = 7;
+            let abbr = WayDate.dayOfWeekAbbrev(dayOfWeek)
+            return abbr
+        }
+        expect(tf).toThrowError();
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('month abbreviation', () => {
+    const tests = [
+        [1, 'Jan'],
+        [2, 'Feb'],
+        [3, 'Mar'],
+        [4, 'Apr'],
+        [5, 'May'],
+        [6, 'Jun'],
+        [7, 'Jul'],
+        [8, 'Aug'],
+        [9, 'Sep'],
+        [10,'Oct'],
+        [11,'Nov'],
+        [12,'Dec']
+    ];
+    test.each(tests)('%s %s: test', (num, expected) => {
+        let abbr = WayDate.monthAbbrev(num)
+        expect(abbr).toEqual(expected)
+      })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('date from day of year', () => {
+    const tests = [
+        [[1, 2023], new WayDate(1, 1, 2023)],
+        [[366, 2024], new WayDate(12, 31, 2024)]
+    ]
+    test.each(tests)('day of year', (dayYear, expectedDate) => {
+        let actualDate = WayDate.dateFromDayOfYear(...dayYear);
+        expect(actualDate).toEqual(expectedDate)
+    })
+
+    test('leap year confusion', () => {
+        const tf = () => {
+            const year = 2023;
+            let actualdDate = WayDate.dateFromDayOfYear(366, year);
+            return actualdDate
+        }
+        expect(tf).toThrow(Error)
     })
 })
