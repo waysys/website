@@ -75,14 +75,14 @@ describe('month abbreviation', () => {
         [7, 'Jul'],
         [8, 'Aug'],
         [9, 'Sep'],
-        [10,'Oct'],
-        [11,'Nov'],
-        [12,'Dec']
+        [10, 'Oct'],
+        [11, 'Nov'],
+        [12, 'Dec']
     ];
     test.each(tests)('%s %s: test', (num, expected) => {
         let abbr = WayDate.monthAbbrev(num)
         expect(abbr).toEqual(expected)
-      })
+    })
 })
 
 // ----------------------------------------------------------------------------
@@ -104,5 +104,86 @@ describe('date from day of year', () => {
             return actualdDate
         }
         expect(tf).toThrow(Error)
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('leap year', () => {
+    const tests = [
+        [2024, true],
+        [2023, false],
+        [1900, false],
+        [2000, true]
+    ];
+
+    test.each(tests)('%s %s: leap year test', (year, expected) => {
+        let actual = WayDate.isLeapYear(year)
+        expect(actual).toEqual(expected)
+    })
+
+})
+
+// ----------------------------------------------------------------------------
+
+describe('days in year', () => {
+    const tests = [
+        [2023, 365],
+        [2000, 366],
+    ];
+
+    test.each(tests)('%s %s: days in year test', (year, expected) => {
+        let actual = WayDate.daysInYear(year);
+        expect(actual).toEqual(expected);
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('day of year', () => {
+    const tests = [
+        [[1, 1, 2023], 1],
+        [[1, 31, 2023], 31],
+        [[12, 31, 2024], 366],
+        [[7, 4, 2024], 186]
+    ];
+
+    test.each(tests)('%s %s: day of year', (date, expected) => {
+        let actual = WayDate.dayOfYear(date[0], date[1], date[2]);
+        expect(actual).toEqual(expected);
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('absolute date', () => {
+    const tests = [
+        [154683, new WayDate(7, 4, 2024)],
+        [1, WayDate.MinDate],
+        [WayDate.MAXIMUM_ABSOLUTE_DATE, WayDate.MaxDate]
+    ]
+
+    test.each(tests)('%s %s: absolute date', (abDate, expectedDate) => {
+        let actualDate = WayDate.dateFromAbsolute(abDate);
+        expect(actualDate).toEqual(expectedDate)
+    })
+
+    test.each(tests)('%s %s: value of', (expectedAbDate, date) => {
+        let actualAbDate = date.valueOf();
+        expect(actualAbDate).toEqual(expectedAbDate);
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('increment and decrement', () => {
+    const tests = [
+        [new WayDate(1, 1, 2024), new WayDate(1, 2, 2024)],
+        [new WayDate(12, 31, 2023), new WayDate(1, 1, 2024)]
+    ];
+
+    test.each(tests)('%s %s: increment', (date, expectedDate) => {
+        let actualDate = date.increment();
+        expect(actualDate).toEqual(expectedDate);
     })
 })
