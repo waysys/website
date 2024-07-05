@@ -596,7 +596,7 @@ class WayDate {
         } else if (this.month == 1) {
             date = new WayDate(12, 31, this.year - 1)
         } else {
-            date = new WayDate(this.month - 1, WayDate.daysInMonth(this.month - 1), this.year)
+            date = new WayDate(this.month - 1, WayDate.daysInMonth(this.month - 1, this.year), this.year)
         }
         return date
     }
@@ -686,5 +686,27 @@ class WayDate {
             result = WayDate.Compare.EQUAL;
         }
         return result;
+    }
+
+    /**
+     * Return true if this date is after another date (and not equal to another date).
+     * 
+     * @param {WayDate} anotherDate the other date
+     * @returns {boolean} true if this date is after the other date
+     */
+    after(anotherDate) {
+        const result = this.compare(anotherDate); 
+        return result == WayDate.Compare.GREATER;
+    }
+
+    /**
+     * Return true if this date is before another date (and not equal to another date).
+     * 
+     * @param {WayDate} anotherDate the other date
+     * @returns {boolean} true if this date is before the other date
+     */
+    before(anotherDate) {
+        const result = this.compare(anotherDate);
+        return result == WayDate.Compare.LESS;
     }
 }

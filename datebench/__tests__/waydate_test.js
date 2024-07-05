@@ -79,9 +79,20 @@ describe('month abbreviation', () => {
         [11, 'Nov'],
         [12, 'Dec']
     ];
+
     test.each(tests)('%s %s: test', (num, expected) => {
-        let abbr = WayDate.monthAbbrev(num)
-        expect(abbr).toEqual(expected)
+        let abbr = WayDate.monthAbbrev(num);
+        expect(abbr).toEqual(expected);
+    });
+
+    const tests2 = [
+        [new WayDate(1, 1, 1900), 'Jan'],
+        [new WayDate(12, 17, 1945), 'Dec']
+    ];
+
+    test.each(tests2)('%s %s: month abbreviation', (date, expectedMonth) => {
+        let actualMonth = date.monthAbbrev();
+        expect(actualMonth).toEqual(expectedMonth)
     })
 })
 
@@ -179,11 +190,112 @@ describe('absolute date', () => {
 describe('increment and decrement', () => {
     const tests = [
         [new WayDate(1, 1, 2024), new WayDate(1, 2, 2024)],
-        [new WayDate(12, 31, 2023), new WayDate(1, 1, 2024)]
+        [new WayDate(12, 31, 2023), new WayDate(1, 1, 2024)],
+        [new WayDate(10, 31, 2023), new WayDate(11, 1, 2023)]
     ];
 
     test.each(tests)('%s %s: increment', (date, expectedDate) => {
         let actualDate = date.increment();
         expect(actualDate).toEqual(expectedDate);
+    });
+
+    test.each(tests)('%s %s: decrement', (expectedDate, date) => {
+        let actualDate = date.decrement()
+        expect(actualDate).toEqual(expectedDate)
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('day of week', () => {
+    const tests = [
+        [new WayDate(1, 1, WayDate.MINIMUM_YEAR), 1],
+        [new WayDate(7, 4, 2024), 4]
+    ];
+
+    test.each(tests)('%s %s: day of week', (date, expectedDayOfWeek) => {
+        let actualDayOfWeek = date.dayOfWeekNumber()
+        expect(actualDayOfWeek).toEqual(expectedDayOfWeek)
+    })
+
+    const tests2 = [
+        [new WayDate(1, 1, WayDate.MINIMUM_YEAR), "Mon"],
+        [new WayDate(7, 4, 2024), "Thu"]       
+    ]
+
+    test.each(tests2)('%s %s: day of week', (date, expectedDayOfWeek) => {
+        let actualDayOfWeek = date.dayOfWeek()
+        expect(actualDayOfWeek).toEqual(expectedDayOfWeek)
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('add to date', () => {
+    const tests = [
+        1, 2, 3, 10, 20, 1000
+    ];
+
+    test.each(tests)('add to date: %s', (value) => {
+        const date = new WayDate(12, 17, 1945);
+        let actualDate = date.add(value);
+        let expectedDate = date;
+        for (let i = 0; i < value; i++) {
+            expectedDate = expectedDate.increment()
+        }
+        expect(actualDate).toEqual(expectedDate)
+    })
+
+    test.each(tests)('subtract to date: -%s', (value) => {
+        const date = new WayDate(11, 17, 1880)
+        let actualDate = date.add(-value)
+        let expectedDate = date
+        for (let i = 0; i < value; i++) {
+            expectedDate = expectedDate.decrement()
+        }
+        expect(actualDate).toEqual(expectedDate)
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('difference', () => {
+    const tests = [
+        [new WayDate(11, 17, 1948), new WayDate(11, 10, 1948), 7],
+        [new WayDate(12, 17, 2024), new WayDate(1, 5, 2025), -19],
+        [WayDate.MaxDate, WayDate.MinDate, WayDate.MAXIMUM_ABSOLUTE_DATE - 1],
+        [WayDate.MinDate, WayDate.MaxDate, 1 - WayDate.MAXIMUM_ABSOLUTE_DATE],
+    ];
+
+    test.each(tests)('from %s subtract %s to equal %s', (fromDate, subDate, expectedDiff) => {
+        let actualDiff = fromDate.difference(subDate);
+        expect(actualDiff).toEqual(expectedDiff)
+    })
+})
+
+// ----------------------------------------------------------------------------
+
+describe('compare', () => {
+    const tests = [
+        [new WayDate(11, 17, 1948), new WayDate(11, 10, 1948), WayDate.Compare.GREATER],
+        [new WayDate(12, 17, 2024), new WayDate(1, 5, 2025), WayDate.Compare.LESS],
+        [WayDate.MaxDate, WayDate.MinDate, WayDate.Compare.GREATER],
+        [WayDate.MinDate, WayDate.MaxDate, WayDate.Compare.LESS],
+        [WayDate.MinDate, WayDate.MinDate, WayDate.Compare.EQUAL]
+    ];
+    
+    test.each(tests)('compare %s %s %s', (date1, date2, expectedComp) => {
+        let actualComp = date1.compare(date2);
+        expect(actualComp).toEqual(expectedComp)
+    })
+
+    test.each(tests)('After %s %s %s', (date1, date2, comp) => {
+        let result = date1.after(date2);
+        expect(result).toEqual(comp == WayDate.Compare.GREATER)
+    })
+
+    test.each(tests)('Before %s %s %s', (date1, date2, comp) => {
+        let result = date1.before(date2);
+        expect(result).toEqual(comp == WayDate.Compare.LESS)
     })
 })
