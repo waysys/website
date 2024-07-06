@@ -7,76 +7,13 @@
  */
 
 import { WayDate } from "../model/WayDate.js";
+import { Display } from "../view/display.js";
 
-/* --------------------------------------------------------------------------
-* Support Functions
------------------------------------------------------------------------------ */
+const dsp = new Display()
 
-/**
- * Set the value on an input.
- * 
- * @param {string} id the id of the element beginning with #
- * @param {string/number} value the value to be applied
- */
-function setValue(id, value) {
-    const inpt = document.querySelector(id);
-    if (inpt === null) {
-        throw new Error("Input with id could not be found: " + id);
-    }
-    inpt.value = value;
-}
-
-/**
- * getValue returns the value of an input.
- * 
- * @param {string} id the id of the element beginning with #
- * @returns the value from the input
- */
-function getValue(id) {
-    const inpt = document.querySelector(id);
-    if (inpt == null) {
-        throw new Error("Input with id could not be found: " + id);
-    }
-    return inpt.value;
-}
-
-/** 
- * getValueInt returns the value of an input as an integer.
- * If the value cannot be converted to an integer, return
- * NaN.
- * 
- * @param {string} id the id of the element beginning with #
- * @returns the value from the input
- */
-function getValueInt(id) {
-    const result = getValue(id);
-    let value = NaN;
-    if (typeof result === "string") {
-        value = parseInt(result, 10);
-    } else if (typeof result === "number") {
-        value = result;
-    }
-    return value;
-}
-
-/**
- * setText sets the text on an element with the specified
- * id.
- * 
- * @param {string} id the id of the element starting with #
- * @param {string} text the text for the element 
- */
-function setText(id, text) {
-    const elem = document.querySelector(id);
-    if (elem === null) {
-        throw Error("Cannot find element with id: " + id);
-    }
-    elem.textContent = text;
-}
-
-/* --------------------------------------------------------------------------
-* Element Functions
------------------------------------------------------------------------------ */
+// ---------------------------------------------------------------------------
+// Element Functions
+// ----------------------------------------------------------------------------
 
 /** 
  * setRequestDate sets up the initial values of
@@ -89,9 +26,9 @@ function setRequestDate(date) {
     const month = date.month;
     const day = date.day;
     const year = date.year;
-    setValue("#month", month);
-    setValue("#day", day);
-    setValue("#year", year);
+    dsp.setValue(document, "#month", month);
+    dsp.setValue(document, "#day", day);
+    dsp.setValue(document, "#year", year);
 }
 
 
@@ -102,7 +39,7 @@ function setRequestDate(date) {
  * @param {string} text the error message
  */
 function displayError(text) {
-    setText("#error", text);
+    dsp.setText(document, "#error", text);
 }
 
 /**
@@ -114,9 +51,9 @@ function displayError(text) {
  * @returns {WayDate} an instance of WayDate
  */
 function getRequestedDate() {
-    const month = getValueInt('#month');
-    const day = getValueInt('#day');
-    const year = getValueInt('#year');
+    const month = dsp.getValueInt(document, '#month');
+    const day = dsp.getValueInt(document, '#day');
+    const year = dsp.getValueInt(document, '#year');
     let thisDate = null;
     if (!WayDate.isValidDate(month, 1, 1900)) {
         displayError("Please enter a valid month between 1 and 12");
@@ -143,9 +80,9 @@ function setDateInformation() {
         const dayOfYear = date.dayYear();
         const isLeapYear = date.leapYear();
         const dayOfWeek = date.dayOfWeek();
-        setValue("#DayOfYear", "" + dayOfYear);
-        setValue("#IsLeapYear", isLeapYear ? "Yes" : "No");
-        setValue("#DayOfWeek", dayOfWeek)
+        dsp.setValue(document, "#DayOfYear", "" + dayOfYear);
+        dsp.setValue(document, "#IsLeapYear", isLeapYear ? "Yes" : "No");
+        dsp.setValue(document, "#DayOfWeek", dayOfWeek)
     }
 }
 
@@ -185,63 +122,51 @@ function displayCalendar() {
         //
         // Fetch calendar table
         //
-        const calendar = document.querySelector('#calendar');
-        if (calendar === null) {
-            throw Error("Unable to retrieve calendar table");
-        }
+        const calendar = dsp.getTable(document, '#calendar')
         //
         // Set text for rable rows
         //
-        let rows = calendar.querySelectorAll('tr');
-        if (rows.length === 0) {
-            throw Error("No rows found in calendar");
-        }
-        let rowNum = 0;
-        for (let row of rows) {
-            if (rowNum > 0) {
-                processRow(row, rowNum, date);
-            }
-            rowNum++;
+        const numberRows = calendar.numberRows
+        for (let rowNum = 1; rowNum < numberRows; rowNum++) {
+            let row = calendar.getRow(rowNum)
+            processRow(row, rowNum, date);
         }
         //
         // Set caption
         //
-        const caption = calendar.querySelector('caption')
-        const monthAbbrev = date.monthAbbrev(date.month)
-        caption.textContent = monthAbbrev + ' ' + date.year
+        // const caption = calendar.querySelector('caption')
+        // const monthAbbrev = date.monthAbbrev(date.month)
+        // caption.textContent = monthAbbrev + ' ' + date.year
     }
 }
 
 /**
  * processRow populates a row 
  * 
- * @param {Element} row a <tr> element containing <td> elements
+ * @param {Row} row an instance of Row
  * @param {int} rowNum the row in the table (0 < row <= 6)
  * @param {WayDate} date a date in the month being displayed
  */
 function processRow(row, rowNum, date) {
-    let cells = row.querySelectorAll('td');
-    if (cells.length != 7) {
-        throw Error("Row does not have 7 cells.  Row number is: " + rowNum)
-    }
     let dayOfWeek = 0;
-    for (let cell of cells) {
-        let value = dayInCalendar(date, rowNum - 1, dayOfWeek)
-        cell.textContent = value;
+    const numberCells = row.numberCells;
+    for (let index = 0; index < numberCells; index++) {
+        let value = dayInCalendar(date, rowNum - 1, dayOfWeek);
+        row.setText(index, value)
         dayOfWeek++
     }
 }
 
-/* --------------------------------------------------------------------------
-* Event Listeners
------------------------------------------------------------------------------ */
+// ----------------------------------------------------------------------------
+// Event Listeners
+// ----------------------------------------------------------------------------
 
 /**
  * calcEventListener listens for the onClick event and updates the screen.
  * 
  * @param {Event} event the event object
  */
-function calcEvenListener(event) {
+function calcEventListener(event) {
     console.log("event received: " + event.type)
     setDateInformation();
     displayCalendar();
@@ -256,13 +181,8 @@ function setUpEvent() {
     //
     // Set event listener on Calculate button
     //
-    let b = document.querySelector('#calculate');
-    if (b === null) {
-        throw new Error("<button id = calculate> was not found");
-    } else {
-        b.addEventListener("click", calcEvenListener)
-        console.log("Event listener on button is set.")
-    }
+    dsp.setEventListenClick(document, '#calculate', calcEventListener)
+    console.log("Event listener on button is set.")
     //
     // Initialize fields
     //
@@ -271,4 +191,4 @@ function setUpEvent() {
     displayCalendar();
 }
 
-window.addEventListener("load", setUpEvent, false)
+dsp.setEventListener(window, setUpEvent)

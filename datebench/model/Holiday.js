@@ -15,20 +15,20 @@ import { WayDate } from "./WayDate.js";
 export { Holiday }
 
 /**
- * Enumerated values of the position in the month
- */
-Holiday.Position = {
-    FIRST: 1,
-    SECOND: 2,
-    THIRD: 3,
-    FOURTH: 4,
-    LAST: 5
-}
-
-/**
  * Holiday is a class for creating the dates of United States holidays
  */
 class Holiday {
+
+    /**
+     * Enumerated values of the position in the month
+     */
+    static Position = {
+        FIRST: 1,
+        SECOND: 2,
+        THIRD: 3,
+        FOURTH: 4,
+        LAST: 5
+    }
 
     /**
      * Return the date for New Year's Day.
@@ -141,149 +141,36 @@ class Holiday {
     }
 
     /**
-     * Return the date the holiday is observed at the specified index.
+     * Return an array of holidays.
      *
-     * @param index an index from 0 through 9
-     * @param year the desired year of the holiday
-     * @returns a observed holiday date
+     * @param {int} year the desired year of the holiday
+     * @returns {array} an array of holidays
      */
-    static observedHolidays(index, year) {
-        var date;
+    static holidays(year) {
         this.assert(!isNaN(year), "holiday: year must be a number");
         this.assert(year >= 1900,
             "holiday: holiday year must be equal or greater than 1900: " + year);
-        switch (index) {
-        case 0:
-            date = this.observedHoliday(this.newYearsDay(year));
-            break;
-        case 1:
-            date = this.observedHoliday(this.martinLutherKingsBirthday(year));
-            break;
-        case 2:
-            date = this.observedHoliday(this.washingtonsBirthday(year));
-            break;
-        case 3:
-            date = this.easter(year);
-            break;
-        case 4:
-            date = this.observedHoliday(this.memorialDay(year));
-            break;
-        case 5:
-            date = this.observedHoliday(this.independenceDay(year));
-            break;
-        case 6:
-            date = this.observedHoliday(this.laborDay(year));
-            break;
-        case 7:
-            date = this.observedHoliday(this.columbusDay(year));
-            break;
-        case 8:
-            date = this.observedHoliday(this.veteransDay(year));
-            break;
-        case 9:
-            date = this.observedHoliday(this.thanksgiving(year));
-            break;
-        case 10:
-            date = this.observedHoliday(this.christmas(year));
-            break;
-        default:
-            throw new Error("holiday: invalid index: " + index);
-        }
-        return date;
+        
+        const hldy = [
+            new Holiday(this.newYearsDay(year), "New Year's Day"),
+            new Holiday(this.martinLutherKingsBirthday(year), "Birthday of Martin Luther King, Jr."),
+            new Holiday(this.washingtonsBirthday(year), "Washington's Birthday"),
+            new Holiday(this.easter(year), "Easter"),
+            new Holiday(this.memorialDay(year), "Memorial Day"),
+            new Holiday(this.juneteenth(year), "Juneteenth"),
+            new Holiday(this.independenceDay(year), "Independence Day"),
+            new Holiday(this.laborDay(year), "Labor Day"),
+            new Holiday(this.columbusDay(year), "Columbus Day"),
+            new Holiday(this.veteransDay(year), "Veterans Day"),
+            new Holiday(this.thanksgiving(year), "Thanksgiving Day"),
+            new Holiday(this.christmas(year), "Christmas")
+        ]
+        return hldy;
     }
 
-    /**
-     * Return the date of the holiday at the specified index.
-     *
-     * @param index an index from 0 through 9
-     * @param year the desired year of the holiday
-     * @returns a holiday date
-     */
-    static holidays(index, year) {
-        let date;
-        this.assert(!isNaN(year), "holiday: year must be a number");
-        this.assert(year >= 1900,
-            "holiday: holiday year must be equal or greater than 1900: " + year);
-
-        switch (index) {
-        case 0:
-            date = WayDate.newYearsDay(year);
-            break;
-        case 1:
-            date = WayDate.martinLutherKingsBirthday(year);
-            break;
-        case 2:
-            date = WayDate.washingtonsBirthday(year);
-            break;
-        case 3:
-            date = WayDate.easter(year);
-            break;
-        case 4:
-            date = WayDate.memorialDay(year);
-            break;
-        case 5:
-            date = WayDate.juneteenth(year);
-            break;
-        case 6:
-            date = WayDate.independenceDay(year);
-            break;
-        case 7:
-            date = WayDate.laborDay(year);
-            break;
-        case 8:
-            date = WayDate.columbusDay(year);
-            break;
-        case 9:
-            date = this.veteransDay(year);
-            break;
-        case 10:
-            date = this.thanksgiving(year);
-            break;
-        case 11:
-            date = this.christmas(year);
-            break;
-        default:
-            throw new Error("holiday: invalid index: " + index);
-        }
-        return date;
-    }
-
-    /**
-     * Return the name of the holiday for a given index.
-     *
-     * @param {number} index (0 <= index <= 10}
-     * @returns {string} the name of the holiday
-     */
-    static getName(index) {
-        const names = [
-            "New Year's Day",
-            "Birthday of Martin Luther King, Jr.",
-            "Washington's Birthday",
-            "Easter",
-            "Memorial Day",
-            "Juneteenth",
-            "Independence Day",
-            "Labor Day",
-            "Columbus Day",
-            "Veterans Day",
-            "Thanksgiving Day",
-            "Christmas"
-        ];
-
-        if (isNaN(index)) {
-            throw new Error("getName: invalid index: " + index);
-        } else if (index < 0) {
-            throw new Error("getName: invalid index: " + index);
-        } else if (index >= this.names.length) {
-            throw new Error("getName: invalid index: " + index);
-        }
-        return names[index];
-    }
-
-
-    /* -------------------------------------------------------------------------
-     Supporting Functions
-     ------------------------------------------------------------------------- */
+    // ------------------------------------------------------------------------
+    // Supporting Functions
+    // ------------------------------------------------------------------------
 
     /**
      * Throw an exception if the result is false.
@@ -376,24 +263,24 @@ class Holiday {
     static calculateOffset(monthPosition) {
         var offset = 0;
         switch (monthPosition) {
-        case Holiday.Position.FIRST:
-            offset = 7;
-            break;
-        case Holiday.Position.SECOND:
-            offset = 14;
-            break;
-        case Holiday.Position.THIRD:
-            offset = 21;
-            break;
-        case Holiday.Position.FOURTH:
-            offset = 28;
-            break;
-        case Holiday.Position.LAST:
-            offset = -7;
-            break;
-        default:
-            throw new Error("nthDayFromDate: illegal position: " +
-                monthPosition);
+            case Holiday.Position.FIRST:
+                offset = 7;
+                break;
+            case Holiday.Position.SECOND:
+                offset = 14;
+                break;
+            case Holiday.Position.THIRD:
+                offset = 21;
+                break;
+            case Holiday.Position.FOURTH:
+                offset = 28;
+                break;
+            case Holiday.Position.LAST:
+                offset = -7;
+                break;
+            default:
+                throw new Error("nthDayFromDate: illegal position: " +
+                    monthPosition);
         }
         return offset;
     }
@@ -473,19 +360,19 @@ class Holiday {
     static observedHoliday(date) {
         let dayOfWeek = date.dayOfWeekNumber();
         switch (dayOfWeek) {
-        case 0: // Sunday
-            date = date.add(1);
-            break;
-        case 6: // Saturday
-            date = date.add(-1);
-            break;
+            case 0: // Sunday
+                date = date.add(1);
+                break;
+            case 6: // Saturday
+                date = date.add(-1);
+                break;
         }
         return date;
     }
 
-    /* -------------------------------------------------------------------------
-     Easter
-     ------------------------------------------------------------------------- */
+    // ------------------------------------------------------------------------
+    // Easter
+    // ------------------------------------------------------------------------
 
     /**
      * Return the date of Easter
@@ -545,8 +432,66 @@ class Holiday {
         const cent = Math.floor(year / 100);
         const result =
             (14 + (11 * (year % 19)) - Math.floor((3 * cent) / 4) +
-            Math.floor((5 + 8 * cent) / 25)) % 30;
+                Math.floor((5 + 8 * cent) / 25)) % 30;
         return result;
+    }
+
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+
+    /**
+     * @constructor
+     */
+    constructor(date, name) {
+        this.date = date;
+        this.nm = name;
+    }
+
+    /**
+     * Return the date of the holiday
+     * 
+     * @returns {WayDate} the date of the holiday
+     */
+    get holiday() {
+        return this.date
+    }
+
+    /**
+     * Return the name of the holiday
+     * 
+     * @returns {string} the name of the holiday
+     */
+    get name() {
+        return this.nm
+    }
+
+    /**
+    * Return the date a holiday would be observed if it were a federal holiday.
+    *
+    * @returns the date a holiday will be observed
+    */
+    get observedHoliday() {
+        const dayOfWeek = this.date.dayOfWeekNumber();
+        let date = this.date
+        switch (dayOfWeek) {
+            case 0: // Sunday
+                date = this.date.add(1);
+                break;
+            case 6: // Saturday
+                date = this.date.add(-1);
+                break;
+        }
+        return date
+    }
+
+    /**
+     * Return the day of the week on which the holiday is observed.
+     * 
+     * @returns {string} the abbreviation of the day of the week
+     */
+    get observedDayOfWeek() {
+        return this.observedHoliday.dayOfWeek()
     }
 
 }

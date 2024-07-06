@@ -299,3 +299,14 @@ describe('compare', () => {
         expect(result).toEqual(comp == WayDate.Compare.LESS)
     })
 })
+
+// ----------------------------------------------------------------------------
+
+describe('today', () => {
+    test('today', () => {
+        const today = WayDate.today();
+        expect(today.year).toEqual(2024);
+        expect(today.month).toEqual(7);
+        expect(today.day).toEqual(5);
+    })
+})
