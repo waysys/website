@@ -20,22 +20,16 @@
         <h2>Holidays</h2>
         <div class="item1">
             <form name="iy">
-                <table>
-                    <tr>
-                        <td class="label">Year</td>
-                        <td><input type="number" id="year" size="4" maxlength="4" title="year" min="1900" max="2399"
-                                ng-model="year" ng-pattern="yearRegex" name="year" /></td>
-                        <td>
-                            <button type="button" id="calculate" ng-click="entry()" class="button">Calculate</button>
-                        </td>
-                    </tr>
-                </table>
+                    <lable class="label">Year</lable>
+                    <input type="number" id="year" size="4" maxlength="4" title="year" min="1900" max="2399"
+                        name="year" />
+                    <button type="button" id="calculate" class="button">Calculate</button>
                 <p id="error" class="error"></p>
             </form>
         </div>
 
-        <div class="item2">
-            <table class="indent" id="holidays">
+        <div class="item1">
+            <table class="table" id="holidays">
                 <tr>
                     <td class="heading">Name of Holiday</td>
                     <td class="heading">Actual Date of Holiday</td>
@@ -46,80 +40,80 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr>    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr> 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr>    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr>  
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr>    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="center"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                </tr>     
+                    <td class="center"></td>
+                </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="center"></td>
+                </tr>
+                <tr>
                     <td></td>
-                </tr>                                                                               
+                    <td></td>
+                    <td></td>
+                    <td class="center"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="center"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="center"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="center"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="center"></td>
+                </tr>
             </table>
         </div>
         <div class="item1">
@@ -133,7 +127,7 @@
                 holiday is observed on the preceding Friday. If the date occurs on a Sunday,
                 the holiday is observed on the following Monday. Easter is not a
                 federal holiday and is always observed on Sunday.</p>
-            <p><B>Note:</B> This page allows entering a year as early as 1900.
+            <p><strong class="bold">Note:</strong> This page allows entering a year as early as 1900.
                 However, the current practice of observing holiday on the Friday or Monday did
                 not come into effect until the 1970s. Also, certain holidays were not observed
                 in the early part of the 1900s. Therefore, although the page will calculate
@@ -173,4 +167,5 @@
 <footer role="contentinfo">
     <p>&copy; 2024 William Shaffer</p>
 </footer>
+
 </html>

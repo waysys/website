@@ -3,10 +3,18 @@
 
 /* -------------------------------------- Classes ----------------------------*/
 
+*.bold {
+    font-weight: bold;
+}
+
 *.button {
     background-color: #E6D8D1;
     font-weight: bold;
     margin: 10px;
+}
+
+*.center {
+    text-align: center;
 }
 
 .container {
@@ -57,6 +65,12 @@
 
 *.noborder {
     border-style: none;
+}
+
+*.table {
+    font-family: monospace;
+    font-size: 12px;
+    width: 40em;
 }
 
 /* ---------------------------  ID Styles ----------------------- */
@@ -127,7 +141,4 @@ ul {
     margin-inline-start: 0;
     padding-inline-start: 40px;
 }
-
-
-
 

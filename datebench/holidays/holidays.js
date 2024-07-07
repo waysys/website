@@ -64,7 +64,11 @@ function displayHolidays(year) {
 function calcEventListener(event) {
     console.log("event received: " + event.type)
     const year = dsp.getValueInt(document, "#year")
-    displayHolidays(year)
+    if ((year >= 1900) && (year <= 2399)) {
+        displayHolidays(year)
+    } else {
+        displayError("Please enter a valid 4 digit year between 1900 and 2399")
+    }
 }
 
 /**
