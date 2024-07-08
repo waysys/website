@@ -5,8 +5,8 @@
     <title>Date Addition</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css" />
-    <script src="../model/WayDate.js"></script>
-    <script type="text/javascript" src="dateadd.js"></script>
+    <script type="module" src="../model/WayDate.js"></script>
+    <script type="module" src="./dateadd.js"></script>
     <link rel="shortcut icon" href="../assets/img/waysys.ico" type="image/x-icon">
 </head>
 
@@ -16,56 +16,40 @@
     </header>
 
     <article class="container">
-        <form>
-            <table>
-                <tr>
-                    <td class="heading">Month</td>
-                    <td class="heading">Day</td>
-                    <td class="heading">Year</td>
-                    <td class="heading">Days</td>
-                </tr>
-                <tr>
-                    <td><input type="number" id="month" size="2" maxlength="2" title="month" min="1" max="12"
-                            ng-model="month" ng-pattern="twoDigitRegex" /></td>
-                    <td><input type="number" id="day" size="2" maxlength="2" title="day" ng-model="day" min="1" max="31"
-                            ng-pattern="twoDigitRegex" /></td>
-                    <td><input type="number" id="year" size="4" maxlength="4" title="year" ng-model="year" min="1601"
-                            max="3999" ng-pattern="fourDigitRegex" /></td>
-                    <td><input type="number" id="days" maxlength="7" title="number of days to add" ng-model="days"
-                            ng-pattern="numRegex" /></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td class="heading">Date</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td><input type="text" id="Date" readonly class="noborder" title="date"
-                            value="{{resultDate.toString()}}" /></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-            <button type="button" id="calculate" ng-click="entry()" class="button">Calculate</button>
-            <p id="error" class="error">{{error}}</p>
-        </form>
+        <div class="item1">
+            <h2>Date Addition</h2>
+            <form>
+                <table>
+                    <tr>
+                        <td class="heading">Month</td>
+                        <td class="heading">Day</td>
+                        <td class="heading">Year</td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" id="month" size="2" maxlength="2" title="month" min="1" max="12" /></td>
+                        <td><input type="number" id="day" size="2" maxlength="2" title="day" min="1" max="31" /></td>
+                        <td><input type="number" id="year" size="4" maxlength="4" title="year" min="1601" max="3999" />
+                        </td>
+                    </tr>
+                    </table>
+                    <table>
+                    <tr>
+                        <td class="heading">Days</td>
+                        <td>&nbsp;</td>
+                        <td class="label">Date</td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" id="days" size="4" maxlength="7" title="number of days to add" /></td>
+                        <td>&nbsp;</td>
+                        <td><input type="text" id="date" readonly class="noborder" title="date" value="" size="10" /></td>
+                    </tr>
+                </table>
+                <button type="button" id="calculate" class="button">Calculate</button>
+                <p id="error" class="error"></p>
+            </form>
         </div>
-        <div class="indent">
+
+        <div class="item2">
             <h2>Instructions</h2>
             <p>
                 To calculate the date resulting from adding or subtracting a number

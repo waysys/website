@@ -453,8 +453,7 @@ class WayDate {
      */
     constructor(month, day, year) {
         if (!WayDate.isValidDate(month, day, year)) {
-            throw new Error("WayDate: invalid date: " +
-                month + " " + day + " " + year);
+            throw new Error("Invalid date: " + month + "/" + day + "/" + year);
         }
         this.month = month;
         this.day = day;
