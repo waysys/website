@@ -4,77 +4,124 @@
  * Date        Author     Descriptions
  * ----------- ---------- ----------------------------------------------------
  * 29-Dec-2016 W Shaffer  File created
+ * 08-Jul-2024 W Shaffer  Converted to ES6
  */
 
-/* globals angular */
+import { WayDate } from "../model/WayDate.js";
+import { Display } from "../view/display.js";
 
-angular.
-    module("absolute", []).
-    controller("absoluteCtrl", AbsoluteCtrl);
+const dsp = new Display()
+
+// ---------------------------------------------------------------------------
+// Element Functions
+// ----------------------------------------------------------------------------
 
 /**
- * This function is an AngularJS controller for the absolute.html screen.
- *
- * @param $scope the AngularJS scope
- * @constructor
+ * displayError displays an error message for the user
+ * on the element with the error id.
+ * 
+ * @param {string} text the error message
+ * @param {string} suffix either "1" or "2" to indicate which field
  */
-function AbsoluteCtrl($scope) {
-
-    /**
-     * Define the model for this module.
-     */
-    $scope.resultDate = WayDate.today();
-    $scope.month1 = $scope.resultDate.month;
-    $scope.day1 = $scope.resultDate.day;
-    $scope.year1 = $scope.resultDate.year;
-    $scope.error1 = "";
-    $scope.month2 = $scope.resultDate.month;
-    $scope.day2 = $scope.resultDate.day;
-    $scope.year2 = $scope.resultDate.year;
-    $scope.error2 = "";
-    $scope.absolute2 = $scope.resultDate.valueOf();
-    $scope.twoDigitRegex = "\\d{1,2}";
-    $scope.fourDigitRegex = "\\d{4}";
-    $scope.numRegex = "[+,-]?\\d{1,6}";
-    $scope.result = $scope.resultDate.valueOf();
-
-    /**
-     * Perform the calculation of the absolute date from month, day, and year.
-     */
-    $scope.entry1 = function () {
-        $scope.error1 = "";
-        if (typeof $scope.month1 !== "number") {
-            $scope.error1 = "Please enter a valid month between 1 and 12";
-        } else if (typeof $scope.day1 !== "number") {
-            $scope.error1 = "Please enter a valid day between 1 and 31";
-        } else if (typeof $scope.year1 !== "number") {
-            $scope.error1 = "Please enter a valid year between 1601 and 3999";
-        } else {
-            try {
-                var date = new WayDate($scope.month1, $scope.day1, $scope.year1);
-                $scope.result = date.valueOf();
-            } catch (e) {
-                $scope.error1 = e.message;
-            }
-        }
-    };
-
-    /**
-     * Perform the calculation of month, day, and year from the absolute date.
-     */
-    $scope.entry2 = function () {
-        $scope.error2 = "";
-        if (typeof $scope.absolute2 !== "number") {
-            $scope.error2 = "Please enter a valid absolute date between 1 and 876216";
-        } else {
-            try {
-                var datelist = WayDate.monthDayYearFromAbsolute($scope.absolute2);
-                $scope.month2 = datelist[0];
-                $scope.day2 = datelist[1];
-                $scope.year2 = datelist[2];
-            } catch (e) {
-                $scope.error2 = e.message;
-            }
-        }
-    };
+function displayError(text, suffix) {
+    dsp.setText(document, "#error" + suffix, text);
 }
+
+/**
+ * getDate returns the date set by the user
+ * in the requested date fields.  Null is returned
+ * if the user has made an error in entering the
+ * month, day, and year.
+ * 
+ * @returns {WayDate} an instance of WayDate
+ */
+function getDate() {
+    const month = dsp.getValueInt(document, '#month1');
+    const day = dsp.getValueInt(document, '#day1');
+    const year = dsp.getValueInt(document, '#year1');
+    let thisDate = null;
+    if (!WayDate.isValidDate(month, 1, 1900)) {
+        displayError("Please enter a valid month between 1 and 12", "1");
+    } else if (!WayDate.isValidDate(1, day, 2024)) {
+        displayError("Please enter a valid day between 1 and 31", "1");
+    } else if (!WayDate.isValidDate(1, 1, year)) {
+        displayError("Please enter a valid year between 1601 and 3999", "1");
+    } else {
+        try {
+            thisDate = new WayDate(month, day, year);
+        } catch (e) {
+            displayError(e.toString(), "1");
+            thisDate = null
+        }
+    }
+    return thisDate;
+}
+
+/**
+ * Display the absolute date.
+ * 
+ * @param {int} absoluteDate the calculated absolute date
+ */
+function displayAbsoluteDate(absoluteDate) {
+    dsp.setValue(document, "#absolute1", absoluteDate);
+}
+
+
+/**
+ * Return the entered absolut date.
+ * 
+ * @returns {int} the absolute date entered by the user
+ */
+function getAbsoluteDate() {
+    const absoluteDate = dsp.getValueInt(document, "")
+}
+
+
+// ----------------------------------------------------------------------------
+// Event Listeners
+// ----------------------------------------------------------------------------
+
+/**
+ * calcEventListener listens for the onClick event and updates the screen.
+ * This event listener handles the first form.
+ * 
+ * @param {Event} event the event object
+ */
+function calcEventListener1(event) {
+    console.log("event received: " + event.type);
+    displayError("", "1")
+    const date = getDate();
+    if (date != null) {
+        const absoluteDate = date.valueOf();
+        displayAbsoluteDate(absoluteDate)
+    }
+}
+
+/**
+ * calcEventListener listens for the onClick event and updates the screen.
+ * 
+ * @param {Event} event the event object
+ */
+function calcEventListener2(event) {
+    console.log("event received: " + event.type)
+
+}
+
+/**
+ * setUp is a listenter that listens for the "load" event on the window,
+ * sets other event listeners, and sets display values.
+ */
+function setUpEvent() {
+    console.log("Executing setUp")
+    //
+    // Set event listener on Calculate button
+    //
+    dsp.setEventListenClick(document, '#calculate1', calcEventListener1)
+    dsp.setEventListenClick(document, '#calculate2', calcEventListener2)
+    console.log("Event listener on button is set.")
+    //
+    // Initialize fields
+    //
+}
+
+dsp.setEventListener(window, setUpEvent)

@@ -121,6 +121,16 @@ h2 {
     margin-bottom: 0.75em;
 }
 
+label {
+    display: block;
+    margin-top: 10px;
+    width: 150px;
+}
+
+input{
+    display: block;
+}
+
 ol {
     list-style: decimal outside none;
     margin-inline-start: 0;

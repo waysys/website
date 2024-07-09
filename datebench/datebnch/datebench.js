@@ -31,7 +31,6 @@ function setRequestDate(date) {
     dsp.setValue(document, "#year", year);
 }
 
-
 /**
  * displayError displays an error message for the user
  * on the element with the error id.
