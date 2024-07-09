@@ -75,6 +75,30 @@ class WayDate {
     }
 
     /**
+     * Return true if the day is a valid day, given the month and year.
+     * 
+     * @param {number} day the day being tested
+     * @returns {boolean} true if day is a valid day
+     */
+    static isDay(month, day, year) {
+        //
+        // Preconditions:
+        //
+        this.assert(this.isMonth(month) && this.isYear(year),
+            "Invalid month or year: " + month + "/" + year)
+
+        let result = true;
+        if (day > this.daysInMonth(month, year)) {
+            result = false;
+        } else if (day < 1) {
+            result = false;
+        }
+        //
+        // Postcondition: definitional
+        return result;
+    }
+
+    /**
      * Return true if the dayOfWeek is a valid day of the week, that is:
      * 0 <= dayOfWeek <= 6
      * 
@@ -92,6 +116,26 @@ class WayDate {
     }
 
     /**
+      * Return true if the combination of month, day, year is
+      * a valid date.
+      *
+      * @param {number} month the month of the year 1 <= month <= 12
+      * @param {number} day the day of the month 1 <= day <= 31
+      * @param {number} year the year of the date 1600 < year < 4000
+      */
+    static isValidDate(month, day, year) {
+        let result = true;
+        if (!this.isMonth(month)) {
+            result = false;
+        } else if (!this.isYear(year)) {
+            result = false;
+        } else if (!this.isDay(month, day, year)) {
+            result = false;
+        }
+        return result;
+    }
+
+    /**
      * Return true if the dayOfYear is a valid day of the year, that is:
      * if year is a leap year, 1 <= dayOfYear <= 366
      * if year is not a leap year, 1 <= dayOfYear < 365
@@ -101,6 +145,11 @@ class WayDate {
      * @returns (boolean) true if the day of year is valid
      */
     static isDayOfYear(dayOfYear, year) {
+        //
+        // Preconditions
+        //
+        this.assert(this.isYear(year), "Invalid year: " + year)
+
         let result = true;
         if (typeof dayOfYear !== "number") {
             result = false;
@@ -124,39 +173,6 @@ class WayDate {
             result = true
         }
         return result
-    }
-
-    /**
-     * Return true if the combination of month, day, year is
-     * a valid date.
-     *
-     * @param {number} month the month of the year 1 <= month <= 12
-     * @param {number} day the day of the month 1 <= day <= 31
-     * @param {number} year the year of the date 1600 < year < 4000
-     */
-    static isValidDate(month, day, year) {
-        let result = true;
-        let numberDaysInMonth;
-
-        if (!this.isMonth(month)) {
-            result = false;
-        } else if (!this.isYear(year)) {
-            result = false;
-        } else if (typeof day !== "number") {
-            result = false;
-        } else if (isNaN(day)) {
-            result = false;
-        }
-
-        if (result) {
-            numberDaysInMonth = WayDate.daysInMonth(month, year);
-            if (day < 1) {
-                result = false;
-            } else if (day > numberDaysInMonth) {
-                result = false;
-            }
-        }
-        return result;
     }
 
     // ------------------------------------------------------------------------
@@ -233,7 +249,7 @@ class WayDate {
      */
     static dateFromAbsolute(abDate) {
         this.assert(this.isAboluteDate(abDate), "Invalid absolute date: " + abDate)
- 
+
         const year = WayDate.yearFromAbsolute(abDate);
         const dayOfYear = abDate - WayDate.daysInPastYears(year - 1);
         const monthDay = WayDate.monthDayFromDayOfYear(dayOfYear, year);
@@ -241,7 +257,7 @@ class WayDate {
     }
 
     // ------------------------------------------------------------------------
-    // Static Methods
+    // Data Providers
     // ------------------------------------------------------------------------
 
     /**
@@ -361,12 +377,18 @@ class WayDate {
     }
 
     /**
-     * Return the year of the absolute date
+     * Return the year of the absolute date.
      *
      * @param {number} abDate an absolute date (1 <= abDate <= MAXIMUM_ABSOLUTE_DATE)
      * @returns {number} year associated with the absolute date
      */
     static yearFromAbsolute(abDate) {
+        //
+        // Precondition
+        //
+        this.assert(this.isAboluteDate(abDate), 
+            "Invalid absolute datee: " + abDate);
+
         let year;
         const d0 = abDate - 1,
             n400 = Math.floor(d0 / 146097), // Number of days in a 400 year cycle:
@@ -425,22 +447,6 @@ class WayDate {
         return [month, day];
     }
 
-    /* -------------------------------------------------------------------------
-     Supporting Functions
-     ------------------------------------------------------------------------- */
-
-    /**
-     * Throw an exception if the result is false.
-     *
-     * @param {Boolean} result the result of a test
-     * @param {String} descr the description of the test
-     */
-    static assert(result, descr) {
-        if (!result) {
-            throw new Error(descr);
-        }
-    }
-
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
@@ -452,6 +458,9 @@ class WayDate {
      * @constructor
      */
     constructor(month, day, year) {
+        //
+        // Precondition
+        //
         if (!WayDate.isValidDate(month, day, year)) {
             throw new Error("Invalid date: " + month + "/" + day + "/" + year);
         }
@@ -569,7 +578,7 @@ class WayDate {
         WayDate.assert(!this.equals(WayDate.MaxDate),
             "Unable to increment maximum date")
 
-        let date 
+        let date
         if (this.day < this.lastDayOfMonth().day) {
             date = new WayDate(this.month, this.day + 1, this.year)
         } else if (this.month == 12) {
@@ -586,7 +595,7 @@ class WayDate {
      * @returns (WayDate) the day before the current date
      */
     decrement() {
-        WayDate.assert(!this.equals(WayDate.MinDate), 
+        WayDate.assert(!this.equals(WayDate.MinDate),
             "Unable to decrement minimum date")
 
         let date
@@ -659,8 +668,8 @@ class WayDate {
      * Return the last day of the month
      */
     lastDayOfMonth() {
-        return new WayDate(this.month, 
-            WayDate.daysInMonth(this.month, this.year), 
+        return new WayDate(this.month,
+            WayDate.daysInMonth(this.month, this.year),
             this.year)
     }
 
@@ -694,7 +703,7 @@ class WayDate {
      * @returns {boolean} true if this date is after the other date
      */
     after(anotherDate) {
-        const result = this.compare(anotherDate); 
+        const result = this.compare(anotherDate);
         return result == WayDate.Compare.GREATER;
     }
 
@@ -708,4 +717,20 @@ class WayDate {
         const result = this.compare(anotherDate);
         return result == WayDate.Compare.LESS;
     }
+
+    // -------------------------------------------------------------------------
+    // Supporting Functions
+    //------------------------------------------------------------------------- */
+
+    /**
+     * Throw an exception if the result is false.
+     *
+     * @param {Boolean} result the result of a test
+     * @param {String} descr the description of the test
+     */
+    static assert(result, descr) {
+        if (!result) {
+            throw new Error(descr);
+        }
+    }    
 }
