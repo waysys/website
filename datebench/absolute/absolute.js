@@ -58,14 +58,27 @@ function getDate() {
 }
 
 /**
+ * displayDate displays the date based on the absolute date.
+ * 
+ * @param {int} absoluteDate an absolute date
+ * @param {string} suffix either "1" or "2" to indicate which field
+ */
+function displayDate(absoluteDate, suffix) {
+    const date = WayDate.dateFromAbsolute(absoluteDate);
+    dsp.setValue(document, "#month" + suffix, date.month);
+    dsp.setValue(document, "#day" + suffix, date.day);
+    dsp.setValue(document, "#year" + suffix, date.year);
+}
+
+/**
  * Display the absolute date.
  * 
  * @param {int} absoluteDate the calculated absolute date
+ * @param {string} suffix either "1" or "2" to indicate which field
  */
-function displayAbsoluteDate(absoluteDate) {
-    dsp.setValue(document, "#absolute1", absoluteDate);
+function displayAbsoluteDate(absoluteDate, suffix) {
+    dsp.setValue(document, "#absolute" + suffix, absoluteDate);
 }
-
 
 /**
  * Return the entered absolut date.
@@ -73,7 +86,12 @@ function displayAbsoluteDate(absoluteDate) {
  * @returns {int} the absolute date entered by the user
  */
 function getAbsoluteDate() {
-    const absoluteDate = dsp.getValueInt(document, "")
+    let absoluteDate = dsp.getValueInt(document, "#absolute2");
+    if (!WayDate.isAboluteDate(absoluteDate)) {
+        displayError("Invalid absolute date: " + absoluteDate, "2");
+        absoluteDate = 0;
+    }
+    return absoluteDate
 }
 
 
@@ -88,12 +106,12 @@ function getAbsoluteDate() {
  * @param {Event} event the event object
  */
 function calcEventListener1(event) {
-    console.log("event received: " + event.type);
-    displayError("", "1")
+    console.log("event 1 received: " + event.type);
+    displayError("", "1");
     const date = getDate();
     if (date != null) {
         const absoluteDate = date.valueOf();
-        displayAbsoluteDate(absoluteDate)
+        displayAbsoluteDate(absoluteDate, "1");
     }
 }
 
@@ -103,8 +121,12 @@ function calcEventListener1(event) {
  * @param {Event} event the event object
  */
 function calcEventListener2(event) {
-    console.log("event received: " + event.type)
-
+    console.log("event 2 received: " + event.type);
+    displayError("", "2");
+    const absoluteDate = getAbsoluteDate();
+    if (absoluteDate > 0) {
+        displayDate(absoluteDate, "2");
+    }
 }
 
 /**
@@ -112,16 +134,24 @@ function calcEventListener2(event) {
  * sets other event listeners, and sets display values.
  */
 function setUpEvent() {
-    console.log("Executing setUp")
+    console.log("Executing setUp");
     //
     // Set event listener on Calculate button
     //
-    dsp.setEventListenClick(document, '#calculate1', calcEventListener1)
-    dsp.setEventListenClick(document, '#calculate2', calcEventListener2)
-    console.log("Event listener on button is set.")
+    dsp.setEventListenClick(document, '#calculate1', calcEventListener1);
+    dsp.setEventListenClick(document, '#calculate2', calcEventListener2);
+    console.log("Event listener on button is set.");
     //
     // Initialize fields
     //
+    const today = WayDate.today();
+    const absoluteDate = today.valueOf();
+    displayError("", "1");
+    displayError("", "2")
+    displayDate(absoluteDate, "1");
+    displayDate(absoluteDate, "2");
+    displayAbsoluteDate(absoluteDate, "1");
+    displayAbsoluteDate(absoluteDate, "2");
 }
 
 dsp.setEventListener(window, setUpEvent)
