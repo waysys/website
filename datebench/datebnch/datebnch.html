@@ -10,15 +10,27 @@
     <script src="../model/WayDate.js" type="module"></script>
     <script src="./datebench.js" type="module"></script>
     <link rel="shortcut icon" href="../assets/img/waysys.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body id="fullpage">
     <header role="banner">
-        <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>         
+        <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>
+        <nav role="full-horizontal">
+            <ul>
+              <li><a href="../datebnch/datebnch.html">Single Date</a></li>
+              <li><a href="../holidays/holidays.html">Holidays</a></li>
+              <li><a href="../dateadd/dateadd.html">Date Addition</a></li>
+              <li><a href="../datediff/datediff.html">Date Difference</a></li>
+              <li><a href="../absolute/absolute.html">Absolute Date</a></li>
+            </ul>
+          </nav>
+
     </header>
 
     <article class="container">
-        <h2>Single Date Check</h2>  
+        <h2>Single Date Check</h2>
         <div class="item1">
             <form>
                 <table>
@@ -28,12 +40,14 @@
                         <td class="heading">Year</td>
                     </tr>
                     <tr>
-                        <td><input type="number" id="month" size="3" maxlength="2" title="month" min="1"    max="12"/></td>
-                        <td><input type="number" id="day"   size="3" maxlength="2" title="day"   min="1"    max="31"/></td>
-                        <td><input type="number" id="year"  size="5" maxlength="4" title="year"  min="1601" max="3999" /></td>
+                        <td><input type="number" id="month" size="3" maxlength="2" title="month" min="1" max="12" />
+                        </td>
+                        <td><input type="number" id="day" size="3" maxlength="2" title="day" min="1" max="31" /></td>
+                        <td><input type="number" id="year" size="5" maxlength="4" title="year" min="1601" max="3999" />
+                        </td>
                     </tr>
                 </table>
-                <button type="button" id="calculate"  class="button">Calculate</button>
+                <button type="button" id="calculate" class="button">Calculate</button>
             </form>
         </div>
 
@@ -41,18 +55,15 @@
             <table>
                 <tr>
                     <td class="label">Day of Year</td>
-                    <td><input type="text" id="DayOfYear" readonly title="Day of Year"
-                             class="noborder" /></td>
+                    <td><input type="text" id="DayOfYear" readonly title="Day of Year" class="noborder" /></td>
                 </tr>
                 <tr>
                     <td class="label">Is Leap Year</td>
-                    <td><input type="text" id="IsLeapYear" readonly title="Is Leap Year?"
-                            class="noborder" /></td>
+                    <td><input type="text" id="IsLeapYear" readonly title="Is Leap Year?" class="noborder" /></td>
                 </tr>
                 <tr>
                     <td class="label">Day Of Week</td>
-                    <td><input type="text" id="DayOfWeek" readonly title="Day of Week" 
-                            class="noborder" /></td>
+                    <td><input type="text" id="DayOfWeek" readonly title="Day of Week" class="noborder" /></td>
                 </tr>
             </table>
             <p id="error" class="error"></p>
@@ -87,7 +98,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>   
+                </tr>
                 <tr>
                     <td></td>
                     <td></td>
@@ -105,7 +116,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>   
+                </tr>
                 <tr>
                     <td></td>
                     <td></td>
@@ -123,7 +134,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>                 
+                </tr>
             </table>
         </div>
         <div class="item2">

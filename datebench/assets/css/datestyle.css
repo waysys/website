@@ -29,20 +29,10 @@
 
 .item1 {
     grid-column: 1 / 1;
-  }
+}
 
 .item2 {
     grid-column: 2 / 2;
-}
-
-@media only screen and (max-width: 40em) {
-    .container {
-        grid-template-columns: 90% 10%;
-    }
-
-    .item2 {
-        grid-column: 1 / 1;
-    }
 }
 
 *.heading {
@@ -73,6 +63,102 @@
     width: 40em;
 }
 
+/* ---------------------------  Menu ----------------------- */
+
+/*
+* {
+    box-sizing: border-box;
+}
+    */
+
+nav {
+    display: block;
+}
+
+article {
+    display: block;
+    clear: both;
+}
+
+nav[role="full-horizontal"] {
+    width: 100%;
+
+    ul {
+        width: 100%;
+        list-style: none;
+
+        >li {
+            position: relative;
+            float: left;
+            padding: .25em 1em;
+            margin: 0.5em 0.75em;
+
+            text-transform: uppercase;
+            cursor: pointer;
+            background: rgba(255, 255, 255, .8);
+            text-align: center;
+            border-radius: .75em;
+            transition-duration: .3s;
+            transition-timing-function: ease-in-out;
+            transition-property: background, color, padding, border-radius;
+            box-shadow:
+                .1em -.1em 0 .1em rgba(0, 0, 0, .2),
+                inset 0 0 0 .15em rgba(0, 0, 0, .4),
+                -.1em .1em 0 .1em rgba(0, 0, 0, .2);
+
+            &:after {
+                position: absolute;
+                z-index: -1;
+                content: "";
+                right: 0;
+                border-radius: 50%;
+                box-shadow:
+                    1em 1em 0 2em linen;
+            }
+
+            &:last-child:after {
+                box-shadow: none;
+            }
+
+            &:hover {
+                background-color: #E6D8D1;
+                padding-left: 3em;
+
+                >a {
+                    color: #fff;
+                }
+            }
+
+            >a {
+                color: #333;
+                text-decoration: none;
+                font-size: 0.8em;
+                transition: color .3s ease-in-out;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 40em) {
+    .container {
+        grid-template-columns: 90% 10%;
+    }
+
+    .item2 {
+        grid-column: 1 / 1;
+    }
+}
+
+/* small screen */
+@media screen and (max-width: 40em) {
+    nav[role="full-horizontal"] {
+        ul>li {
+            width: 50%;
+        }
+    }
+}
+
+
 /* ---------------------------  ID Styles ----------------------- */
 
 #fullpage {
@@ -83,8 +169,8 @@
 /* ---------------------------  Element Styles ------------------ */
 
 article {
-    margin-left: 7%;  
-    margin-right: 10%;  
+    margin-left: 7%;
+    margin-right: 10%;
 }
 
 
@@ -111,7 +197,8 @@ h1 {
     vertical-align: middle;
     font-size: 2em;
     margin-bottom: 1em;
-    margin-left: 1%;  
+    margin-left: 1%;
+    color: #000066;
 }
 
 h2 {
@@ -127,7 +214,7 @@ label {
     width: 150px;
 }
 
-input{
+input {
     display: block;
 }
 
@@ -151,4 +238,3 @@ ul {
     margin-inline-start: 0;
     padding-inline-start: 40px;
 }
-

@@ -8,11 +8,31 @@
     <script type="module" src="../model/WayDate.js"></script>
     <script type="module" src="./dateadd.js"></script>
     <link rel="shortcut icon" href="../assets/img/waysys.ico" type="image/x-icon">
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
 </head>
 
 <body id="fullpage">
     <header role="banner">
         <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>
+        <div class="topnav" id="myTopnav">
+            <a href="../datebnch/datebnch.html"  >Single Date</a>
+            <a href="../holidays/holidays.html" >Holidays</a>
+            <a href="../dateadd/dateadd.html" class="active" >Date Addition</a>
+            <a href="../datediff/datediff.html">Date Difference</a>
+            <a href="../absolute/absolute.html">Absolute Date</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
     </header>
 
     <article class="container">
