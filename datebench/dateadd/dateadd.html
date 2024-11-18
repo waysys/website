@@ -22,17 +22,16 @@
 
 <body id="fullpage">
     <header role="banner">
-        <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>
-        <div class="topnav" id="myTopnav">
-            <a href="../datebnch/datebnch.html"  >Single Date</a>
-            <a href="../holidays/holidays.html" >Holidays</a>
-            <a href="../dateadd/dateadd.html" class="active" >Date Addition</a>
-            <a href="../datediff/datediff.html">Date Difference</a>
-            <a href="../absolute/absolute.html">Absolute Date</a>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
+        <h1><a href="../index.html"><img src="../assets/img/waysys.gif" class="logo" /></a>DateBench&trade;</h1>
+        <nav role="full-horizontal">
+            <ul>
+              <li><a href="../datebnch/datebnch.html">Single Date</a></li>
+              <li><a href="../holidays/holidays.html">Holidays</a></li>
+              <li><a href="../dateadd/dateadd.html">Date Addition</a></li>
+              <li><a href="../datediff/datediff.html">Date Difference</a></li>
+              <li><a href="../absolute/absolute.html">Absolute Date</a></li>
+            </ul>
+          </nav>
     </header>
 
     <article class="container">
@@ -46,13 +45,14 @@
                         <td class="heading">Year</td>
                     </tr>
                     <tr>
-                        <td><input type="number" id="month" size="2" maxlength="2" title="month" min="1" max="12" /></td>
+                        <td><input type="number" id="month" size="2" maxlength="2" title="month" min="1" max="12" />
+                        </td>
                         <td><input type="number" id="day" size="2" maxlength="2" title="day" min="1" max="31" /></td>
                         <td><input type="number" id="year" size="4" maxlength="4" title="year" min="1601" max="3999" />
                         </td>
                     </tr>
-                    </table>
-                    <table>
+                </table>
+                <table>
                     <tr>
                         <td class="heading">Days</td>
                         <td>&nbsp;</td>
@@ -61,7 +61,8 @@
                     <tr>
                         <td><input type="number" id="days" size="4" maxlength="7" title="number of days to add" /></td>
                         <td>&nbsp;</td>
-                        <td><input type="text" id="date" readonly class="noborder" title="date" value="" size="10" /></td>
+                        <td><input type="text" id="date" readonly class="noborder" title="date" value="" size="10" />
+                        </td>
                     </tr>
                 </table>
                 <button type="button" id="calculate" class="button">Calculate</button>
@@ -88,6 +89,9 @@
                 to the original date.</p>
         </div>
     </article>
+    <footer role="contentinfo">
+        <p>&copy; 2024 William Shaffer</p>
+    </footer>
 </body>
 
 </html>

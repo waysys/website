@@ -13,17 +13,25 @@
 
 <body id="fullpage">
     <header role="banner">
-        <h1><img src="../assets/img/waysys.gif" class="logo" />DateBench&trade;</h1>
+        <h1><a href="../index.html"><img src="../assets/img/waysys.gif" class="logo" /></a>DateBench&trade;</h1>
+        <nav role="full-horizontal">
+            <ul>
+                <li><a href="../datebnch/datebnch.html">Single Date</a></li>
+                <li><a href="../holidays/holidays.html">Holidays</a></li>
+                <li><a href="../dateadd/dateadd.html">Date Addition</a></li>
+                <li><a href="../datediff/datediff.html">Date Difference</a></li>
+                <li><a href="../absolute/absolute.html">Absolute Date</a></li>
+            </ul>
+        </nav>
     </header>
 
     <article class="container">
         <h2>Holidays</h2>
         <div class="item1">
             <form name="iy">
-                    <lable class="label">Year</lable>
-                    <input type="number" id="year" size="4" maxlength="4" title="year" min="1900" max="2399"
-                        name="year" />
-                    <button type="button" id="calculate" class="button">Calculate</button>
+                <lable class="label">Year</lable>
+                <input type="number" id="year" size="4" maxlength="4" title="year" min="1900" max="2399" name="year" />
+                <button type="button" id="calculate" class="button">Calculate</button>
                 <p id="error" class="error"></p>
             </form>
         </div>
@@ -140,14 +148,15 @@
             <h2>References</h2>
             <p>These Web sites provide additional information on holidays:</p>
             <ul>
-                <li><a href="http://waysysweb.com/waysys/calendrical_calculations.htm">Calendrical Calculations</a></li>
-                <li><a href="http://en.wikipedia.org/wiki/Federal_holidays#List_of_Holidays">Federal
-                        Holiday - Wikipedia</a></li>
-                <li><a href="http://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/federal-holidays">U.S.
-                        Office of
-                        Personnel Management</a></li>
-                <li><a href="http://aa.usno.navy.mil/faq/docs/easter.php">Date of
-                        Easter</a></li>
+                <li>
+                    Edward M. Reingold and Nachum Dershowitz, Calendrical Calculations: The Millennium Edition, ISBN-13:
+                    978-0521777520
+                </li>
+                <li><a href="http://en.wikipedia.org/wiki/Federal_holidays#List_of_Holidays" target="_blank" rel="noopener noreferrer">
+                    Federal Holiday - Wikipedia</a></li>
+                <li><a href="http://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/federal-holidays" target="_blank" rel="noopener noreferrer">U.S.
+                        Office of Personnel Management</a></li>
+                <li><a href="https://aa.usno.navy.mil/faq/easter" target="_blank" rel="noopener noreferrer">Date of Easter</a></li>
             </ul>
             <h2>Instructions</h2>
             <ol>

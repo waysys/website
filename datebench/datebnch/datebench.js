@@ -167,6 +167,7 @@ function processRow(row, rowNum, date) {
  */
 function calcEventListener(event) {
     console.log("event received: " + event.type)
+    displayError("")
     setDateInformation();
     displayCalendar();
 }
