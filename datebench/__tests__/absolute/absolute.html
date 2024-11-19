@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Absolute Date</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/datestyle.css" />
+    <script type="module" src="../model/WayDate.js"></script>
+    <script type="module" src="./absolute.js"></script>
+</head>
+
+<body id="fullpage">
+
+    <header role="banner">
+        <h1><a href="../index.html"><img src="../assets/img/waysys.gif" class="logo" /></a>DateBench&trade;</h1>
+        <nav role="full-horizontal">
+            <ul>
+              <li><a href="../datebnch/datebnch.html">Single Date</a></li>
+              <li><a href="../holidays/holidays.html">Holidays</a></li>
+              <li><a href="../dateadd/dateadd.html">Date Addition</a></li>
+              <li><a href="../datediff/datediff.html">Date Difference</a></li>
+              <li><a href="../absolute/absolute.html">Absolute Date</a></li>
+            </ul>
+          </nav>
+    </header>
+
+    <article class="container">
+        <div class="item1">
+            <h2>Absolute Date from Date</h2>
+            <form>
+                <label for="month1" class="label">Month</label>
+                <input type="number" id="month1" size="2" maxlength="2" title="month" min="1" max="12" />
+                <label for="day1" class="label">Day</label>
+                <input type="number" id="day1" size="2" maxlength="2" title="day" min="1" max="31" />
+                <label for="year1" class="label">Year</label>
+                <input type="number" id="year1" size="4" maxlength="4" title="year" min="1601" max="3999" />
+                <button type="button" id="calculate1" class="button">Calculate</button>
+                <br/>
+                <label for="absolute1" class="label">Absolute Date</label>
+                <input type="number" id="absolute1" title="Absolute Date" readonly class="noborder" /></td>
+                <p id="error1" class="error"></p>
+            </form>
+        </div>
+        <div class="item2">
+            <h2>Instructions</h2>
+            <p>
+                The absolute date is the date expressed as the number of days since 31-Dec-1600. To calculate the
+                absolute
+                date from the month, day, and year, perform these steps:
+            </p>
+            <ol>
+                <li>Enter the desired date in the <b>Month</b>, <b>Day</b>, and
+                    <b>Year</b> fields.
+                </li>
+                <li>Click the <b>Calculate</b> button.</li>
+            </ol>
+            <p>The page displays the absolute date for the specified month, day, and year.</p>
+        </div>
+        <div class="item1">
+            <h2>Date from Absolute Date</h2>
+            <form>
+                <label for="absolute2" class="label">Absolute Date</label>
+                <input type="number" id="absolute2" title="Absolute Date" min="1" max="876216" maxlength="6" size="7" />
+                <button type="button" id="calculate2" class="button">Calculate</button>
+                <br/>
+                <label for="month2" class="label" size="2">Month</label>
+                <input type="number" id="month2" size="2" title="month" readonly class="noborder" />
+                <label for="day2" class="label">Day</label>
+                <input type="number" id="day2" size="2" title="day" readonly class="noborder" />
+                <label for="year2" class="label">Year</label>
+                <input type="number" id="year2" size="4" title="year" readonly class="noborder" />
+
+                <p id="error2" class="error"></p>
+            </form>
+        </div>
+        <div class="item2">
+            <h2>Instructions</h2>
+            <p>
+                To o calculate the month, day, and year from the absolute date, perform these steps:
+            </p>
+            <ol>
+                <li>Enter the desired absolute date in the Absolute Date field. A valid absolute date is between 1 and
+                    876216.
+                </li>
+                <li>Click the <b>Calculate</b> button.</li>
+            </ol>
+            <p>The page displays the month, day, and year .</p>
+        </div>
+    </article>
+    <footer role="contentinfo">
+        <p>&copy; 2024 William Shaffer</p>
+    </footer>
+</body>
+
+</html>
