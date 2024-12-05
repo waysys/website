@@ -194,6 +194,10 @@ dt {
     font-weight: bold;
 }
 
+em {
+    font-style: italic;
+}
+
 footer {
     margin-top: 2em;
     margin-left: 7%;
